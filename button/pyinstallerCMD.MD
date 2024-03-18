@@ -1,0 +1,1 @@
+pyinstaller --icon=icon.ico --windowed -D -w manage.py
