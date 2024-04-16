@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path, include
+from django.urls import path
 from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
-    path('', dashboard, name="dashboard"),
-    path("auth/register/select/", registerSelect, name="registerSelect"),
-    path("auth/register/", register, name="register")
+    path('deviceControl', deviceControl , name = "deviceControl"),
+    path("deviceExplain", deviceExplain, name = "deviceExplain"),
+    path("delivery", delivery, name = "delivery"),
+    path("item", item, name = "item"),
 ]

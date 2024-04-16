@@ -4,7 +4,7 @@
 
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="{%  url 'index' %}" class="app-brand-link">
+      <a href="{%  url 'dashboard' %}" class="app-brand-link">
         <span class="app-brand-logo demo">
           <svg width="173" height="169" viewBox="0 0 173 169" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M146.914 106.19C131.02 141.46 94.3506 167.539 55.9688 167.935C101.92 169.74 160.221 165.605 170.783 137.343C175.94 123.549 166.538 112.673 146.914 106.2V106.19Z" fill="#A0765F"/>
@@ -183,9 +183,9 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
           <div class="nav-item navbar-search-wrapper mb-0">
-            <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
+            <a class="nav-item nav-link r px-0" href="javascript:void(0);">
               <i class="bx bx-search bx-sm"></i>
-              <span class="d-none d-md-inline-block text-muted">{{ request.resolver_match.r }}</span>  
+              <span id="menuTitle" class="d-none d-md-inline-block text-muted"></span>  
             </a>
           </div>
         </div>
@@ -558,6 +558,7 @@
           </li>
           <!--/ Notification -->
           <!-- User -->
+          {% if user.is_authenticated %}
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
@@ -623,13 +624,20 @@
                 <div class="dropdown-divider"></div>
               </li>
               <li>
-                <a class="dropdown-item" href="{% url "authLogin" %}" target="_blank">
+                <a class="dropdown-item" href="{% url "logout" %}" target="_blank">
                   <i class="bx bx-power-off me-2"></i>
                   <span class="align-middle">Log Out</span>
                 </a>
               </li>
             </ul>
           </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url "login" %}" class="nav-link">
+              <i class="bx bx-log-in bx-sm"></i>
+            </a>
+          </li>
+          {% endif %}
           <!--/ User -->
         </ul>
       </div>

@@ -22,7 +22,8 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("landingPage.urls")),
-    path("data/", include("data.urls")),
+    path('auth/', include('django.contrib.auth.urls')),
+    path("data/", include("datas.urls")),
     path("harvest/", include("harvest.urls")),
     path('alarm/', include("alram.urls")),
     path('manage/', include("manage.urls")),

@@ -18,6 +18,13 @@
 
 <!-- Page JS -->
 <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+    <script>
+        let pageName = {
+            'dashboard':  "관리자용 대쉬보드"
+        }
+        let url_name = '{{ request.resolver_match.url_name }}'
+        document.getElementById("menuTitle").innerHTML = pageName[url_name] || url_name
+    </script>
 </body>
 
 </html>

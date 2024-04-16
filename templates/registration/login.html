@@ -84,14 +84,15 @@
           </a>
         </div>
         <!-- /Logo -->
-
-        <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+        {% block content %}
+        <form id="formAuthentication" class="mb-3" action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
           <div class="mb-3">
-            <input type="text" class="form-control p-2 " id="email" name="email-username" placeholder="ID" autofocus="autofocus"/>
+            <input type="text" name="{{ form.username.name }}" value="{{ form.username.value|default_if_none:'' }}" class="form-control p-2" id="id_username" placeholder="아이디">
           </div>
           <div class="mb-3 form-password-toggle">
             <div class="input-group input-group-merge">
-              <input type="password" id="password" class="form-control p-2" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
+              <input type="password" name="{{ form.password.name }}" value="{{ form.password.value|default_if_none:'' }}" class="form-control p-2" id="id_password" placeholder="비밀번호">
               <span class="input-group-text cursor-pointer">
                 <i class="bx bx-hide"></i>
               </span>
@@ -105,16 +106,18 @@
                   계정 기억</label>
               </div>
               <div>
-                <a href="auth-forgot-password-cover.html">비밀번호 찾기</a>
+                <a href="{% url 'password_reset' %}">비밀번호 찾기</a>
               </div>
             </div>
           </div>
-          <button class="btn btn-primary d-grid w-100">Sign in</button>
+          <button type='submit' value="login" class="btn btn-primary d-grid w-100">로그인</button>
+          <input type="hidden" name="next" value="{{ next }}">
         </form>
+        {% endblock %}
 
         <p class="text-center">
           <span>회원정보가 없으신가요?</span>
-          <a href="{% url 'authRegisterSelect' %}">
+          <a href="{% url 'registerSelect' %}">
             <span>회원가입</span>
           </a>
         </p>
