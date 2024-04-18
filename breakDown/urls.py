@@ -21,5 +21,6 @@ from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
-    path("", breakDown, name = 'breakDown'),
+    path("control", controlError , name = 'controlError'),
+    path("collect", collectError, name = 'collectError'),
 ]

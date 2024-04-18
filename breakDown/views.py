@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def breakDown(request):
-    return render(request, 'pages/breakDown.html')
+def controlError(request):
+    return render(request, 'pages/control.html')
+
+def collectError(request):
+    return render(request, 'pages/collect.html')
