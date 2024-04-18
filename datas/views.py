@@ -5,7 +5,7 @@ def deviceControl(request):
     return render(request, 'pages/DeviceControl.html')
 
 def deviceExplain(request):
-    return render(request, 'pages/deviceExplain.html')
+    return render(request, 'pages/DeviceExplain.html')
 
 def delivery(request):
     return render(request, 'pages/Delivery.html')
