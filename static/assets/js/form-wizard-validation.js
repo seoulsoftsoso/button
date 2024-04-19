@@ -71,7 +71,7 @@
               compare: function () {
                 return wizardValidationFormStep1.querySelector('[name="formValidationPass"]').value;
               },
-              message: '비밀번호는 같아야 합니다.'
+              message: 'The password and its confirm are not the same'
             }
           }
         }

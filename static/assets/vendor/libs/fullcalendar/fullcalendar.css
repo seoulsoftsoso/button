@@ -158,13 +158,13 @@
 }
 .light-style .fc-event-primary:not(.fc-list-event) {
   background-color: #e7e7ff !important;
-  color: #3D170F !important;
+  color: #696cff !important;
 }
 .light-style .fc-event-primary:not(.fc-list-event) {
   border-color: rgba(105, 108, 255, 0.15);
 }
 .light-style .fc-event-primary.fc-list-event .fc-list-event-dot {
-  border-color: #3D170F !important;
+  border-color: #696cff !important;
 }
 .light-style .fc-event-secondary:not(.fc-list-event) {
   background-color: #ebeef0 !important;
@@ -315,14 +315,14 @@
 }
 .dark-style .fc-event-primary:not(.fc-list-event) {
   background-color: #35365f !important;
-  color: #3D170F !important;
+  color: #696cff !important;
 }
 .dark-style .fc-event-primary:not(.fc-list-event) {
   border-color: rgba(105, 108, 255, 0.15);
   box-shadow: none;
 }
 .dark-style .fc-event-primary.fc-list-event .fc-list-event-dot {
-  border-color: #3D170F !important;
+  border-color: #696cff !important;
 }
 .dark-style .fc-event-secondary:not(.fc-list-event) {
   background-color: #393c50 !important;

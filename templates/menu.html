@@ -53,13 +53,9 @@
           <span class="badge badge-center rounded-pill bg-danger ms-auto">5</span>
         </a>
         <ul class="menu-sub">
-          <li class="menu-header small">
-            <span class="menu-header-text text-primary">사용자</span>
-          </li>
           <li class="menu-item {% if request.resolver_match.url_name == 'deviceControl' %}active{% endif %}">
             <a href="{% url 'deviceControl' %}" class="menu-link">
               <div class="text-truncate">제배동 관리</div>
-              <span class="badge badge-center rounded-pill bg-danger ms-auto">2</span>
             </a>
           </li>
           <li class="menu-item {% if request.resolver_match.url_name == 'deviceExplain' %}active{% endif %}">
@@ -67,13 +63,17 @@
               <div class="text-truncate">제배동 상세</div>
             </a>
           </li>
-          <li class="menu-header small">
-            <span class="menu-header-text text-primary">주문관리</span>
-          </li>
+        </ul>
+      </li>
+      <li class="menu-item {% if request.resolver_match.route|slice:":6" == 'order/' %} active open {% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-cart"></i>
+          <div class="text-truncate">주문관리</div>
+        </a>
+        <ul class="menu-sub">
           <li class="menu-item {% if request.resolver_match.url_name == 'delivery' %}active{% endif %}">
             <a href="{% url 'delivery' %}" class="menu-link">
               <div class="text-truncate">주문 조회/등록</div>
-              <span class="badge badge-center rounded-pill bg-danger ms-auto">3</span>
             </a>
           </li>
           <li class="menu-item {% if request.resolver_match.url_name == 'item' %}active{% endif %}">
@@ -86,8 +86,8 @@
       <!-- Layouts -->
       <li class="menu-item {% if request.resolver_match.route|slice:":7" == 'manage/' %} active open {% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div class="text-truncate" data-i18n="재배일자 관리">재배일자 관리</div>
+          <i class="menu-icon tf-icons bx bx-calendar"></i>
+          <div class="text-truncate">재배일자 관리</div>
         </a>
 
         <ul class="menu-sub">
@@ -102,7 +102,7 @@
           <!-- Layouts -->
           <li class="menu-item {% if request.resolver_match.route|slice:":10" == 'breakDown/' %} active open {% endif %}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-layout"></i>
+              <i class="menu-icon tf-icons bx bx-error"></i>
               <div class="text-truncate" data-i18n="고장식별 기준관리">고장식별 기준관리</div>
             </a>
     

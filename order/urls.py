@@ -18,16 +18,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
-from django.urls import include
+from .views import *
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("landingPage.urls")),
-    path('auth/', include('django.contrib.auth.urls')),
-    path("data/", include("datas.urls")),
-    path("harvest/", include("harvest.urls")),
-    path('alarm/', include("alram.urls")),
-    path('manage/', include("manage.urls")),
-    path('users/', include("users.urls")),
-    path("breakDown/", include("breakDown.urls")),
-    path('order/', include("order.urls")),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("delivery", delivery, name = "delivery"),
+    path("item", item, name = "item"),
+]

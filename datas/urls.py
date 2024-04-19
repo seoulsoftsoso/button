@@ -23,6 +23,4 @@ from .views import *
 urlpatterns = [
     path('deviceControl', deviceControl , name = "deviceControl"),
     path("deviceExplain", deviceExplain, name = "deviceExplain"),
-    path("delivery", delivery, name = "delivery"),
-    path("item", item, name = "item"),
 ]

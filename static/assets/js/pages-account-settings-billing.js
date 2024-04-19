@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 message: 'Please enter billing email'
               },
               emailAddress: {
-                message: '확인!! 이메일 형식'
+                message: 'Please enter valid email address'
               }
             }
           }

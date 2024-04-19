@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'alram',
     'users',
     'breakDown',
+    'order',
 ]
 
 

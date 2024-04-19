@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
           email: {
             validators: {
               notEmpty: {
-                message: '이메일 체크해주세요'
+                message: 'Please enter your email'
               },
               emailAddress: {
-                message: '확인!! 이메일 형식'
+                message: 'Please enter valid email address'
               }
             }
           },
@@ -46,35 +46,35 @@ document.addEventListener('DOMContentLoaded', function (e) {
           password: {
             validators: {
               notEmpty: {
-                message: '비밀번호 입력해주세요'
+                message: 'Please enter your password'
               },
               stringLength: {
                 min: 6,
-                message: '비밀번호는 6자 이상이어야 합니다.'
+                message: 'Password must be more than 6 characters'
               }
             }
           },
           'confirm-password': {
             validators: {
               notEmpty: {
-                message: '확인!! 비밀번호'
+                message: 'Please confirm password'
               },
               identical: {
                 compare: function () {
                   return formAuthentication.querySelector('[name="password"]').value;
                 },
-                message: '비밀번호는 같아야 합니다.'
+                message: 'The password and its confirm are not the same'
               },
               stringLength: {
                 min: 6,
-                message: '비밀번호는 6자 이상이어야 합니다.'
+                message: 'Password must be more than 6 characters'
               }
             }
           },
           terms: {
             validators: {
               notEmpty: {
-                message: '확인!! 체크'
+                message: 'Please agree terms & conditions'
               }
             }
           }

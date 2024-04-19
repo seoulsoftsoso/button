@@ -485,7 +485,7 @@ $(function () {
       userEmail: {
         validators: {
           notEmpty: {
-            message: '이메일 체크해주세요'
+            message: 'Please enter your email'
           },
           emailAddress: {
             message: 'The value is not a valid email address'

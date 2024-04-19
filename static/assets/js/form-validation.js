@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         formValidationEmail: {
           validators: {
             notEmpty: {
-              message: '이메일 체크해주세요'
+              message: 'Please enter your email'
             },
             emailAddress: {
               message: 'The value is not a valid email address'
@@ -102,20 +102,20 @@ document.addEventListener('DOMContentLoaded', function (e) {
         formValidationPass: {
           validators: {
             notEmpty: {
-              message: '비밀번호 입력해주세요'
+              message: 'Please enter your password'
             }
           }
         },
         formValidationConfirmPass: {
           validators: {
             notEmpty: {
-              message: '확인!! 비밀번호'
+              message: 'Please confirm password'
             },
             identical: {
               compare: function () {
                 return formValidationExamples.querySelector('[name="formValidationPass"]').value;
               },
-              message: '비밀번호는 같아야 합니다.'
+              message: 'The password and its confirm are not the same'
             }
           }
         },
