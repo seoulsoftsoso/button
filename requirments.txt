@@ -1,5 +1,5 @@
-asgiref==3.8.1
-Django==4.2.11
+asgiref==3.7.2
+Django==3.2.25
+pytz==2024.1
 sqlparse==0.4.4
-typing_extensions==4.10.0
-uWSGI==2.0.24
+typing_extensions==4.7.1
