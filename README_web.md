@@ -5,7 +5,7 @@ $ python -m venv  web #you can set different name instead of 'web'
 $ source web/Scripts/activate # you can set different name instead of 'web'
 
 $ pip install django
-$ pip freeze > requirments.txt 
+$ pip freeze > requirements.txt 
 $ pip install -r requirements.txt
 
 $ git clone https://github.com/seoulsoftsoso/button.git
