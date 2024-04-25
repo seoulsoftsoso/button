@@ -5,6 +5,7 @@ $ python -m venv  web #you can set different name instead of 'web'
 $ source web/Scripts/activate # you can set different name instead of 'web'
 
 $ pip install django
+$ pip install mysqlclient
 $ pip freeze > requirements.txt 
 $ pip install -r requirements.txt
 
@@ -12,7 +13,7 @@ $ git clone https://github.com/seoulsoftsoso/button.git
 $ cd button
 
 $ python manage.py makemigrations 
-$ python manage.py migrate --fake
+$ python manage.py migrate
 $ python manage.py collectstatic
 $ python manage.py runserver
 ```
