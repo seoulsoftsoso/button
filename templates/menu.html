@@ -76,6 +76,11 @@
               <div class="text-truncate">주문 조회/등록</div>
             </a>
           </li>
+          <li class="menu-item {% if request.resolver_match.url_name == 'build' %}active{% endif %}">
+            <a href="{% url 'build' %}" class="menu-link">
+              <div class="text-truncate">주문 상세/설계</div>
+            </a>
+          </li>
           <li class="menu-item {% if request.resolver_match.url_name == 'item' %}active{% endif %}">
             <a href="{% url 'item' %}" class="menu-link">
               <div class="text-truncate">품목정보 관리</div>

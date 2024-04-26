@@ -13,6 +13,8 @@
 
 <script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js' %}"></script>
+
 <!-- Form Validation -->
 <script src="{% static 'assets/vendor/libs/@form-validation/umd/bundle/popular.min.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js' %}"></script>
@@ -24,13 +26,18 @@
 <script src="{% static 'assets/vendor/libs/hammer/hammer.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/i18n/i18n.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
-<script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+<script src="{% static 'assets/vendor/js/menu.js' %}"></script>\
+<script src="{% static 'assets/vendor/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
 
 <!-- endbuild -->
 
 <!-- Vendors JS -->
 <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jstree/jstree.js' %} "></script>
+
 
 
 <!-- Main JS -->
@@ -38,8 +45,12 @@
 
 <!-- Page JS -->
 <script src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+<script src="{% static 'assets/js/forms-selects.js' %}"></script>
+<script src="{% static 'assets/js/forms-pickers.js' %}"></script>
+<script src="{% static 'assets/js/app-ecommerce-order-details.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-treeview.js' %}"></script>
 
-<script src="{% static 'assets/js/tables-datatables-basic.js' %}"></script>
+
     <script>
         let pageName = {
             'dashboard':  "관리자용 대쉬보드",

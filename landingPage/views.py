@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import CustomerMaster, UserMaster
 
 # Create your views here.
 def dashboard(request):
@@ -15,15 +15,15 @@ def register(request):
     if request.method == "POST":
         password = request.POST.get("password")
         confirmPassword = request.POST.get("confirm-password")
-        corpName = request.POST.get("corpName")
-        corpNumber = request.POST.get("corpNumber")
-        corpManager = request.POST.get("corpManager")
-        department = request.POST.get("department")
+        customer_name = request.POST.get("customer_name")
+        licensee_no = request.POST.get("licensee_no")
+        owner_name = request.POST.get("owner_name")
+        charge_pos = request.POST.get("charge_pos")
         email = request.POST.get("email")
         username = email[:email.find("@")]
         if password == confirmPassword:
             user = User.objects.create_user(username=username, password=password, email=email)
-            profile = Profile.objects.create(user=user, corpName=corpName, corpNumber=corpNumber, corpManager=corpManager, department=department, email=email)
+            UserMaster.objects.create(user=user, custom_name=customer_name, licensee_no=licensee_no, owner_name=owner_name, charge_name=charge_pos, office_email=email)
             login(request, user)
             return redirect("dashboard")
         else:

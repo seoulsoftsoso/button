@@ -1,211 +1,564 @@
 {% load static %}
 {% include "header.html" %}
 {% include 'menu.html' %}
-  <!-- Content -->
+<!-- Content -->
 
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <!-- DataTable with Buttons -->
-      <div class="card">
-        <div class="card-datatable table-responsive">
-          <table class="datatables-basic table border-top">
-            <thead>
-              <tr>
-                <th></th>
-                <th></th>
-                <th>id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Salary</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-      <!-- Modal to add new record -->
-      <div class="offcanvas offcanvas-end" id="add-new-record">
-        <div class="offcanvas-header border-bottom">
-          <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
-          <button
-            type="button"
-            class="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body flex-grow-1">
-          <form class="add-new-record pt-0 row g-2" id="form-add-new-record" onsubmit="return false">
-            <div class="col-sm-12">
-              <label class="form-label" for="basicFullname">Full Name</label>
-              <div class="input-group input-group-merge">
-                <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
-                <input
-                  type="text"
-                  id="basicFullname"
-                  class="form-control dt-full-name"
-                  name="basicFullname"
-                  placeholder="John Doe"
-                  aria-label="John Doe"
-                  aria-describedby="basicFullname2" />
-              </div>
-            </div>
-            <div class="col-sm-12">
-              <label class="form-label" for="basicPost">Post</label>
-              <div class="input-group input-group-merge">
-                <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
-                <input
-                  type="text"
-                  id="basicPost"
-                  name="basicPost"
-                  class="form-control dt-post"
-                  placeholder="Web Developer"
-                  aria-label="Web Developer"
-                  aria-describedby="basicPost2" />
-              </div>
-            </div>
-            <div class="col-sm-12">
-              <label class="form-label" for="basicEmail">Email</label>
-              <div class="input-group input-group-merge">
-                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                <input
-                  type="text"
-                  id="basicEmail"
-                  name="basicEmail"
-                  class="form-control dt-email"
-                  placeholder="john.doe@example.com"
-                  aria-label="john.doe@example.com" />
-              </div>
-              <div class="form-text">You can use letters, numbers & periods</div>
-            </div>
-            <div class="col-sm-12">
-              <label class="form-label" for="basicDate">Joining Date</label>
-              <div class="input-group input-group-merge">
-                <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
-                <input
-                  type="text"
-                  class="form-control dt-date"
-                  id="basicDate"
-                  name="basicDate"
-                  aria-describedby="basicDate2"
-                  placeholder="MM/DD/YYYY"
-                  aria-label="MM/DD/YYYY" />
-              </div>
-            </div>
-            <div class="col-sm-12">
-              <label class="form-label" for="basicSalary">Salary</label>
-              <div class="input-group input-group-merge">
-                <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span>
-                <input
-                  type="number"
-                  id="basicSalary"
-                  name="basicSalary"
-                  class="form-control dt-salary"
-                  placeholder="12000"
-                  aria-label="12000"
-                  aria-describedby="basicSalary2" />
-              </div>
-            </div>
-            <div class="col-sm-12">
-              <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">Submit</button>
-              <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!--/ DataTable with Buttons -->
-
-      <hr class="my-5" />
-
-      <!-- Complex Headers -->
-      <div class="card">
-        <h5 class="card-header">Complex Headers</h5>
-        <div class="card-datatable text-nowrap">
-          <table class="dt-complex-header table table-bordered">
-            <thead>
-              <tr>
-                <th rowspan="2">Name</th>
-                <th colspan="2">Contact</th>
-                <th colspan="3">HR Information</th>
-                <th rowspan="2">Action</th>
-              </tr>
-              <tr>
-                <th>E-mail</th>
-                <th>City</th>
-                <th>Position</th>
-                <th>Salary</th>
-                <th class="border-1">Status</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-      <!--/ Complex Headers -->
-
-      <hr class="my-5" />
-
-      <!-- Row grouping -->
-      <div class="card">
-        <h5 class="card-header">Row Grouping</h5>
-        <div class="card-datatable table-responsive">
-          <table class="dt-row-grouping table border-top">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Email</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Salary</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Email</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Salary</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-      <!--/ Row grouping -->
-
-      <hr class="my-5" />
-
-      <!-- Multilingual -->
-      <div class="card">
-        <h5 class="card-header">Multilingual</h5>
-        <div class="card-datatable table-responsive">
-          <table class="dt-multilingual table border-top">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Salary</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-      <!--/ Multilingual -->
+<div class="container-xxl flex-grow-1 container-p-y">
+  <!-- DataTable with Buttons -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <table class="datatables-basic table border-top">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>id</th>
+            <th>사용자</th>
+            <th>납품처</th>
+            <th>주문일자</th>
+            <th>수량</th>
+            <th>공급가</th>
+            <th>현황</th>
+            <th></th>
+          </tr>
+        </thead>
+      </table>
     </div>
-    <!-- / Content -->
-
-    <div class="content-backdrop fade"></div>
   </div>
+  <!-- Modal to add new record -->
+  <div class="offcanvas offcanvas-end" id="add-new-record">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title" id="exampleModalLabel">주문 등록</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body flex-grow-1">
+      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" onsubmit="return false">
+        <div class="col-sm-12">
+          <label class="form-label" for="orderDate">주문일자</label>
+          <input type="text" id="orderDate" name="basicDate" class="form-control" aria-label="Enter order date" placeholder="년/월/일"/>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label class="form-label" for="clientID">주문자</label>
+          <input type="text" id="clientID" name="clientID" class="form-control" placeholder="Enter client ID" aria-label="Enter client ID"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="orderQuantity">주문수량</label>
+          <input type="number" id="orderQuantity" name="orderQuantity" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="supplyPrice">공급가</label>
+          <div class="input-group input-group-merge">
+            <span id="supplyPrice2" class="input-group-text">
+              <i class="bx bx-dollar"></i>
+            </span>
+            <input type="number" id="supplyPrice" name="supplyPrice" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="supplyPrice2"/>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="tax">부가세</label>
+          <input type="number" id="tax" name="tax" class="form-control" placeholder="Enter tax" aria-label="Enter tax"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="orderTotal">합계</label>
+          <div class="input-group input-group-merge">
+            <span id="orderTotal2" class="input-group-text">
+              <i class="bx bx-dollar"></i>
+            </span>
+            <input type="number" id="orderTotal" name="orderTotal" class="form-control dt-salary" placeholder="Enter order total" aria-label="Enter order total" aria-describedby="orderTotal2"/>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="comment">비고</label>
+          <input id="comment" name="comment" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
+        </div>
+
+        <div class="col-sm-12 mt-3">
+          <input type="submit" class="btn btn-primary data-submit me-sm-3 me-1" value="등록"/>
+          <button type="reset" class="btn btn-outline-info" data-bs-dismiss="offcanvas">초기화</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--/ Complex Headers -->
+</div>
+<!-- / Content -->
+<div class="content-backdrop fade"></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function (e) {
+  (function () {
+    const formAddNewRecord = document.getElementById('form-add-new-record');
+
+    setTimeout(() => {
+      const newRecord = document.querySelector('.create-new'),
+        offCanvasElement = document.querySelector('#add-new-record');
+
+      // To open offCanvas, to add new record
+      if (newRecord) {
+        newRecord.addEventListener('click', function () {
+          offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+          // Empty fields on offCanvas open
+          // Open offCanvas with form
+          offCanvasEl.show();
+        });
+      }
+    }, 200)
+
+    // Form validation for Add new record
+    fv = FormValidation.formValidation(formAddNewRecord, {
+      fields: {
+        basicFullname: {
+          validators: {
+            notEmpty: {
+              message: '주문자 이름은 필수입니다.'
+            }
+          }
+        },
+        basicPost: {
+          validators: {
+            notEmpty: {
+              message: 'Post field is required'
+            }
+          }
+        },
+        basicEmail: {
+          validators: {
+            notEmpty: {
+              message: 'The Email is required'
+            },
+            emailAddress: {
+              message: 'The value is not a valid email address'
+            }
+          }
+        },
+        basicDate: {
+          validators: {
+            notEmpty: {
+              message: '주문일자는 필수입니다.'
+            },
+            date: {
+              format: 'MM/DD/YYYY',
+              message: '올바르지 않은 날짜 형식입니다.'
+            }
+          }
+        },
+        basicSalary: {
+          validators: {
+            notEmpty: {
+              message: '가격은 필수입력입니다.'
+            }
+          }
+        }
+      },
+      plugins: {
+        trigger: new FormValidation
+          .plugins
+          .Trigger(),
+        bootstrap5: new FormValidation
+          .plugins
+          .Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: '.col-sm-12'
+          }),
+        submitButton: new FormValidation
+          .plugins
+          .SubmitButton(),
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation
+          .plugins
+          .AutoFocus()
+      },
+      init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+          if (e.element.parentElement.classList.contains('input-group')) {
+            e
+              .element
+              .parentElement
+              .insertAdjacentElement('afterend', e.messageElement);
+          }
+        });
+      }
+    });
+
+    // FlatPickr Initialization & Validation
+    flatpickr(formAddNewRecord.querySelector('[name="basicDate"]'), {
+      enableTime: false,
+      // See https://flatpickr.js.org/formatting/
+      dateFormat: 'm/d/Y',
+      // After selecting a date, we need to revalidate the field
+      onChange: function () {
+        fv.revalidateField('basicDate');
+      }
+    });
+    flatpickr(formAddNewRecord.querySelector('[name="basicDate2"]'), {
+      enableTime: false,
+      // See https://flatpickr.js.org/formatting/
+      dateFormat: 'm/d/Y',
+      // After selecting a date, we need to revalidate the field
+      onChange: function () {
+        fv.revalidateField('basicDate2');
+      }
+    });
+  })();
+});
+$(function () {
+  var dt_basic_table = $('.datatables-basic')
+  if (dt_basic_table.length) {
+    dt_basic = dt_basic_table.DataTable({
+      ajax: assetsPath + 'json/table-datatable.json',
+      columns: [
+        {
+          data: ''
+        }, {
+          data: 'id'
+        }, {
+          data: 'id'
+        }, {
+          data: 'full_name'
+        }, {
+          data: 'city'
+        }, {
+          data: 'start_date'
+        }, {
+          data: 'count'
+        }, {
+          data: 'price'
+        }, {
+          data: 'status'
+        }, {
+          data: ''
+        }
+      ],
+      columnDefs: [
+        {
+          // For Responsive
+          className: 'control',
+          orderable: false,
+          searchable: false,
+          responsivePriority: 2,
+          targets: 0,
+          render: function (data, type, full, meta) {
+            return '';
+          }
+        }, {
+          // For Checkboxes
+          targets: 1,
+          orderable: false,
+          searchable: false,
+          responsivePriority: 3,
+          checkboxes: true,
+          render: function () {
+            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+          },
+          checkboxes: {
+            selectAllRender: '<input type="checkbox" class="form-check-input">'
+          }
+        }, {
+          targets: 2,
+          searchable: false,
+          visible: false
+        }, {
+          // Avatar image/badge, Name and post
+          targets: 3,
+          responsivePriority: 4,
+          render: function (data, type, full, meta) {
+            var $user_img = full['avatar'],
+              $name = full['full_name'],
+              $post = full['post'];
+            if ($user_img) {
+              // For Avatar image
+              var $output = '<img src="' + assetsPath + 'img/avatars/' + $user_img + '" alt="Avatar" class="rounded-circle">';
+            } else {
+              // For Avatar badge
+              var stateNum = Math.floor(Math.random() * 6);
+              var states = [
+                'success',
+                'danger',
+                'warning',
+                'info',
+                'dark',
+                'primary',
+                'secondary'
+              ];
+              var $state = states[stateNum],
+                $name = full['full_name'],
+                $initials = $name.match(/\b\w/g) || [];
+              $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+              $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
+            }
+            // Creates full output for row
+            var $row_output = '<div class="d-flex justify-content-start align-items-center user-name">' + '<div class="avatar-wrapper">' + '<div class="avatar me-2">' + $output + '</div>' + '</div>' + '<div class="d-flex flex-column">' + '<span class="emp_name text-truncate">' + $name + '</span>' + '<small class="emp_post text-truncate text-muted">' + $post + '</small>' + '</div>' + '</div>';
+            return $row_output;
+          }
+        }, {
+          responsivePriority: 1,
+          targets: 4
+        }, {
+          // Label
+          targets: -2,
+          render: function (data, type, full, meta) {
+            var $status_number = full['status'];
+            var $status = {
+              1: {
+                title: 'Current',
+                class: 'bg-label-primary'
+              },
+              2: {
+                title: 'Professional',
+                class: ' bg-label-success'
+              },
+              3: {
+                title: 'Rejected',
+                class: ' bg-label-danger'
+              },
+              4: {
+                title: 'Resigned',
+                class: ' bg-label-warning'
+              },
+              5: {
+                title: 'Applied',
+                class: ' bg-label-info'
+              }
+            };
+            if (typeof $status[$status_number] === 'undefined') {
+              return data;
+            }
+            return ('<span class="badge ' + $status[$status_number].class + '">' + $status[$status_number].title + '</span>');
+          }
+        }, {
+          // Actions
+          targets: -1,
+          title: 'Actions',
+          orderable: false,
+          searchable: false,
+          render: function (data, type, full, meta) {
+                const htmlCode = `
+                <div class="d-inline-block">
+                    <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end m-0">
+                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bx-info-circle"></i> detail</a></li>
+                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bxs-edit"></i> Edit</a></li>
+                        <li><a href="javascript:;" class="dropdown-item text-danger delete-record"><i class="bx bxs-trash"></i> Delete</a></li>
+                    </ul>
+                </div>
+            `;
+              return (htmlCode );          }
+        }
+      ],
+      order: [
+        [2, 'desc']
+      ],
+      dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+      displayLength: 7,
+      lengthMenu: [
+        7,
+        10,
+        25,
+        50,
+        75,
+        100
+      ],
+      buttons: [
+        {
+          extend: 'collection',
+          className: 'btn btn-label-primary dropdown-toggle me-2',
+          text: '<i class="bx bx-export me-sm-1"></i> <span class="d-none d-sm-inline-block">Export</span>',
+          buttons: [
+            {
+              extend: 'print',
+              text: '<i class="bx bx-printer me-1" ></i>Print',
+              className: 'dropdown-item',
+              exportOptions: {
+                columns: [
+                  3, 4, 5, 6, 7
+                ],
+                // prevent avatar to be display
+                format: {
+                  body: function (inner, coldex, rowdex) {
+                    if (inner.length <= 0) 
+                      return inner;
+                    var el = $.parseHTML(inner);
+                    var result = '';
+                    $.each(el, function (index, item) {
+                      if (item.classList !== undefined && item.classList.contains('user-name')) {
+                        result = result + item.lastChild.firstChild.textContent;
+                      } else if (item.innerText === undefined) {
+                        result = result + item.textContent;
+                      } else 
+                        result = result + item.innerText;
+                      }
+                    );
+                    return result;
+                  }
+                }
+              },
+              customize: function (win) {
+                //customize print view for dark
+                $(win.document.body)
+                  .css('color', config.colors.headingColor)
+                  .css('border-color', config.colors.borderColor)
+                  .css('background-color', config.colors.bodyBg);
+                $(win.document.body)
+                  .find('table')
+                  .addClass('compact')
+                  .css('color', 'inherit')
+                  .css('border-color', 'inherit')
+                  .css('background-color', 'inherit');
+              }
+            }, {
+              extend: 'csv',
+              text: '<i class="bx bx-file me-1" ></i>Csv',
+              className: 'dropdown-item',
+              exportOptions: {
+                columns: [
+                  3, 4, 5, 6, 7
+                ],
+                // prevent avatar to be display
+                format: {
+                  body: function (inner, coldex, rowdex) {
+                    if (inner.length <= 0) 
+                      return inner;
+                    var el = $.parseHTML(inner);
+                    var result = '';
+                    $.each(el, function (index, item) {
+                      if (item.classList !== undefined && item.classList.contains('user-name')) {
+                        result = result + item.lastChild.firstChild.textContent;
+                      } else if (item.innerText === undefined) {
+                        result = result + item.textContent;
+                      } else 
+                        result = result + item.innerText;
+                      }
+                    );
+                    return result;
+                  }
+                }
+              }
+            }, {
+              extend: 'excel',
+              text: '<i class="bx bxs-file-export me-1"></i>Excel',
+              className: 'dropdown-item',
+              exportOptions: {
+                columns: [
+                  3, 4, 5, 6, 7
+                ],
+                // prevent avatar to be display
+                format: {
+                  body: function (inner, coldex, rowdex) {
+                    if (inner.length <= 0) 
+                      return inner;
+                    var el = $.parseHTML(inner);
+                    var result = '';
+                    $.each(el, function (index, item) {
+                      if (item.classList !== undefined && item.classList.contains('user-name')) {
+                        result = result + item.lastChild.firstChild.textContent;
+                      } else if (item.innerText === undefined) {
+                        result = result + item.textContent;
+                      } else 
+                        result = result + item.innerText;
+                      }
+                    );
+                    return result;
+                  }
+                }
+              }
+            }, {
+              extend: 'pdf',
+              text: '<i class="bx bxs-file-pdf me-1"></i>Pdf',
+              className: 'dropdown-item',
+              exportOptions: {
+                columns: [
+                  3, 4, 5, 6, 7
+                ],
+                // prevent avatar to be display
+                format: {
+                  body: function (inner, coldex, rowdex) {
+                    if (inner.length <= 0) 
+                      return inner;
+                    var el = $.parseHTML(inner);
+                    var result = '';
+                    $.each(el, function (index, item) {
+                      if (item.classList !== undefined && item.classList.contains('user-name')) {
+                        result = result + item.lastChild.firstChild.textContent;
+                      } else if (item.innerText === undefined) {
+                        result = result + item.textContent;
+                      } else 
+                        result = result + item.innerText;
+                      }
+                    );
+                    return result;
+                  }
+                }
+              }
+            }, {
+              extend: 'copy',
+              text: '<i class="bx bx-copy me-1" ></i>Copy',
+              className: 'dropdown-item',
+              exportOptions: {
+                columns: [
+                  3, 4, 5, 6, 7
+                ],
+                // prevent avatar to be display
+                format: {
+                  body: function (inner, coldex, rowdex) {
+                    if (inner.length <= 0) 
+                      return inner;
+                    var el = $.parseHTML(inner);
+                    var result = '';
+                    $.each(el, function (index, item) {
+                      if (item.classList !== undefined && item.classList.contains('user-name')) {
+                        result = result + item.lastChild.firstChild.textContent;
+                      } else if (item.innerText === undefined) {
+                        result = result + item.textContent;
+                      } else 
+                        result = result + item.innerText;
+                      }
+                    );
+                    return result;
+                  }
+                }
+              }
+            }
+          ]
+        }, {
+          text: '<i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Record</span>',
+          className: 'create-new btn btn-primary'
+        }
+      ],
+      responsive: {
+        details: {
+          display: $
+            .fn
+            .DataTable
+            .Responsive
+            .display
+            .modal({
+              header: function (row) {
+                var data = row.data();
+                return 'Details of ' + data['full_name'];
+              }
+            }),
+          type: 'column',
+          renderer: function (api, rowIdx, columns) {
+            var data = $
+              .map(columns, function (col, i) {
+                return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+                  ? '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' + '<td>' + col.title + ':' + '</td> ' + '<td>' + col.data + '</td>' + '</tr>'
+                  : '';
+              })
+              .join('');
+
+            return data
+              ? $('<table class="table"/><tbody />').append(data)
+              : false;
+          }
+        }
+      }
+    });
+    $('div.head-label').html('<h5 class="card-title mb-0">DataTable with Buttons</h5>');
+  }
+});
+</script>
+
 {% include 'footer.html' %}

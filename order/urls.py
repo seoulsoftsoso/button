@@ -23,4 +23,7 @@ from .views import *
 urlpatterns = [
     path("delivery", delivery, name = "delivery"),
     path("item", item, name = "item"),
+    path("build", build, name = "build"),
+    path("items", items, name = "items"),
+    path("items/<int:id>", item_id, name = "item_id")
 ]

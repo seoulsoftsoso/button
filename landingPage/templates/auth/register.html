@@ -106,8 +106,8 @@
               {% csrf_token %}
               <div class="d-flex justify-content-between gap-2">
                 <div class="mb-3  mr-2">
-                  <label for="corpName" class="form-label">법인명</label>
-                  <input type="text" class="form-control" id="corpName" name="corpName" placeholder="(주)스니트" autofocus="autofocus"/>
+                  <label for="customer_name" class="form-label">법인명</label>
+                  <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="(주)스니트" autofocus="autofocus"/>
                 </div>
                 <div class="mb-3 ml-2">
                   <label for="name" class="form-label">대표자명</label>
@@ -115,8 +115,8 @@
                 </div>
               </div>
               <div class="mb-3">
-                <label for="corpNumber" class="form-label">사업자 등록번호</label>
-                <input type="text" class="form-control" id="corpNumber" name="corpNumber" placeholder="xxx-xx-xxxxx "/>
+                <label for="licensee_no" class="form-label">사업자 등록번호</label>
+                <input type="text" class="form-control" id="licensee_no" name="licensee_no" placeholder="xxx-xx-xxxxx "/>
               </div>
               <div class="d-flex justify-content-between gap-2">
                 <div class="mb-3  mr-2">
@@ -125,10 +125,10 @@
                   <input type="text" class="form-control" id="name" name="name" placeholder="(주)스니트" autofocus="autofocus"/>
                 </div>
                 <div class="mb-3 ml-2">
-                  <label for="department" class="form-label">직급
+                  <label for="charge_pos" class="form-label">직급
                     <span class="text-secondary">(선택)</span>
                   </label>
-                  <input type="text" class="form-control" id="department" name="department" placeholder="홍길동" autofocus="autofocus"/>
+                  <input type="text" class="form-control" id="charge_pos" name="charge_pos" placeholder="홍길동" autofocus="autofocus"/>
                 </div>
               </div>
 
