@@ -9,6 +9,7 @@ api/migrations
 *.log
 *.pot
 __pycache__/
+*.pyc
 **/migrations/*
 data/
 log/
