@@ -1,5 +1,6 @@
 from django.db import models
 
+from landingPage.models import UserMaster
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -38,23 +39,25 @@ class BOMMaster(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     op = models.ForeignKey('OrderProduct', on_delete=models.CASCADE)
     delete_flag = models.CharField(max_length=1)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='bom_created_by', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(User, related_name='bom_updated_by', on_delete=models.CASCADE)
 
 class OrderMaster(models.Model):
     so_no = models.CharField(max_length=255)
-    client = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_date = models.DateTimeField()
+    client = models.ForeignKey(UserMaster, on_delete=models.CASCADE)
+    order_date = models.DateField()
     order_cnt = models.IntegerField()
     order_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     order_tax = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    order_status = models.CharField(max_length=1, default=1)
+    order_delivery_place = models.CharField(max_length=255)
     comment = models.TextField()
     delete_flag = models.CharField(max_length=1)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='order_created_by', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(User, related_name='order_updated_by', on_delete=models.CASCADE)
 
@@ -69,7 +72,7 @@ class OrderProduct(models.Model):
     request_note = models.TextField(null=True)
     status = models.CharField(max_length=255, null=True)
     delete_flag = models.CharField(max_length=1)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='order_product_created_by', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(User, related_name='order_product_updated_by', on_delete=models.CASCADE)

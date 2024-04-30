@@ -18,6 +18,7 @@
             <th>주문일자</th>
             <th>수량</th>
             <th>공급가</th>
+            <th>부가세</th>
             <th>현황</th>
             <th></th>
           </tr>
@@ -32,48 +33,58 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-grow-1">
-      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" onsubmit="return false">
+      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'orders' %}" method="POST">
+        {% csrf_token %}
         <div class="col-sm-12">
-          <label class="form-label" for="orderDate">주문일자</label>
-          <input type="text" id="orderDate" name="basicDate" class="form-control" aria-label="Enter order date" placeholder="년/월/일"/>
+          <label class="form-label" for="order_date">주문일자</label>
+          <input type="text" id="order_date" name="order_date" class="form-control" aria-label="Enter order date" placeholder="년/월/일"/>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <label class="form-label" for="clientID">주문자</label>
-          <input type="text" id="clientID" name="clientID" class="form-control" placeholder="Enter client ID" aria-label="Enter client ID"/>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="orderQuantity">주문수량</label>
-          <input type="number" id="orderQuantity" name="orderQuantity" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="supplyPrice">공급가</label>
-          <div class="input-group input-group-merge">
-            <span id="supplyPrice2" class="input-group-text">
-              <i class="bx bx-dollar"></i>
+        <div class="col-12">
+          <label class="form-label" for="TagifyUserList">주문자</label>
+          <div class="input-group input-group-merge"> 
+            <span class="input-group-text">
+              <i class="bx bx-user"></i>
             </span>
-            <input type="number" id="supplyPrice" name="supplyPrice" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="supplyPrice2"/>
+            <input type="text" id="TagifyUserList" name="client" class="form-control" placeholder="Enter user" aria-label="Enter user"/>
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="tax">부가세</label>
-          <input type="number" id="tax" name="tax" class="form-control" placeholder="Enter tax" aria-label="Enter tax"/>
+          <label class="form-label" for="order_cnt">주문수량</label>
+          <input type="number" id="order_cnt" name="order_cnt" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="orderTotal">합계</label>
+          <label class="form-label" for="order_price">공급가</label>
           <div class="input-group input-group-merge">
-            <span id="orderTotal2" class="input-group-text">
+            <span id="order_price2" class="input-group-text">
               <i class="bx bx-dollar"></i>
             </span>
-            <input type="number" id="orderTotal" name="orderTotal" class="form-control dt-salary" placeholder="Enter order total" aria-label="Enter order total" aria-describedby="orderTotal2"/>
+            <input type="number" id="order_price" name="order_price" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="order_price2"/>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="order_tax">부가세</label>
+          <input type="number" id="order_tax" name="order_tax" class="form-control" placeholder="Enter order_tax" readonly="readonly"/>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="order_total">합계</label>
+          <div class="input-group input-group-merge">
+            <span id="order_total2" class="input-group-text">
+              <i class="bx bx-dollar"></i>
+            </span>
+            <input type="number" id="order_total" name="order_total" class="form-control dt-salary" readonly="readonly"/>
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
           <label class="form-label" for="comment">비고</label>
           <input id="comment" name="comment" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
         </div>
+        <div class="col-sm-12 col-md-6">
+          <label class="form-label" for="order_delivery_place">납품처</label>
+          <input id="order_delivery_place" name="order_delivery_place" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
+        </div>
 
         <div class="col-sm-12 mt-3">
-          <input type="submit" class="btn btn-primary data-submit me-sm-3 me-1" value="등록"/>
+          <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">추가</button>
           <button type="reset" class="btn btn-outline-info" data-bs-dismiss="offcanvas">초기화</button>
         </div>
       </form>
@@ -85,129 +96,10 @@
 <div class="content-backdrop fade"></div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function (e) {
-  (function () {
-    const formAddNewRecord = document.getElementById('form-add-new-record');
-
-    setTimeout(() => {
-      const newRecord = document.querySelector('.create-new'),
-        offCanvasElement = document.querySelector('#add-new-record');
-
-      // To open offCanvas, to add new record
-      if (newRecord) {
-        newRecord.addEventListener('click', function () {
-          offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
-          // Empty fields on offCanvas open
-          // Open offCanvas with form
-          offCanvasEl.show();
-        });
-      }
-    }, 200)
-
-    // Form validation for Add new record
-    fv = FormValidation.formValidation(formAddNewRecord, {
-      fields: {
-        basicFullname: {
-          validators: {
-            notEmpty: {
-              message: '주문자 이름은 필수입니다.'
-            }
-          }
-        },
-        basicPost: {
-          validators: {
-            notEmpty: {
-              message: 'Post field is required'
-            }
-          }
-        },
-        basicEmail: {
-          validators: {
-            notEmpty: {
-              message: 'The Email is required'
-            },
-            emailAddress: {
-              message: 'The value is not a valid email address'
-            }
-          }
-        },
-        basicDate: {
-          validators: {
-            notEmpty: {
-              message: '주문일자는 필수입니다.'
-            },
-            date: {
-              format: 'MM/DD/YYYY',
-              message: '올바르지 않은 날짜 형식입니다.'
-            }
-          }
-        },
-        basicSalary: {
-          validators: {
-            notEmpty: {
-              message: '가격은 필수입력입니다.'
-            }
-          }
-        }
-      },
-      plugins: {
-        trigger: new FormValidation
-          .plugins
-          .Trigger(),
-        bootstrap5: new FormValidation
-          .plugins
-          .Bootstrap5({
-            // Use this for enabling/changing valid/invalid class
-            // eleInvalidClass: '',
-            eleValidClass: '',
-            rowSelector: '.col-sm-12'
-          }),
-        submitButton: new FormValidation
-          .plugins
-          .SubmitButton(),
-        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-        autoFocus: new FormValidation
-          .plugins
-          .AutoFocus()
-      },
-      init: instance => {
-        instance.on('plugins.message.placed', function (e) {
-          if (e.element.parentElement.classList.contains('input-group')) {
-            e
-              .element
-              .parentElement
-              .insertAdjacentElement('afterend', e.messageElement);
-          }
-        });
-      }
-    });
-
-    // FlatPickr Initialization & Validation
-    flatpickr(formAddNewRecord.querySelector('[name="basicDate"]'), {
-      enableTime: false,
-      // See https://flatpickr.js.org/formatting/
-      dateFormat: 'm/d/Y',
-      // After selecting a date, we need to revalidate the field
-      onChange: function () {
-        fv.revalidateField('basicDate');
-      }
-    });
-    flatpickr(formAddNewRecord.querySelector('[name="basicDate2"]'), {
-      enableTime: false,
-      // See https://flatpickr.js.org/formatting/
-      dateFormat: 'm/d/Y',
-      // After selecting a date, we need to revalidate the field
-      onChange: function () {
-        fv.revalidateField('basicDate2');
-      }
-    });
-  })();
-});
 $(function () {
   var dt_basic_table = $('.datatables-basic')
-  if (dt_basic_table.length) {
     dt_basic = dt_basic_table.DataTable({
-      ajax: assetsPath + 'json/table-datatable.json',
+      ajax: '{% url 'orders' %}',
       columns: [
         {
           data: ''
@@ -216,17 +108,19 @@ $(function () {
         }, {
           data: 'id'
         }, {
-          data: 'full_name'
+          data: ''
         }, {
-          data: 'city'
+          data: 'order_delivery_place'
         }, {
-          data: 'start_date'
+          data: 'order_date'
         }, {
-          data: 'count'
+          data: 'order_cnt'
         }, {
-          data: 'price'
+          data: 'order_tax'
         }, {
-          data: 'status'
+          data: 'order_total'
+        }, {
+          data: ''
         }, {
           data: ''
         }
@@ -248,12 +142,9 @@ $(function () {
           orderable: false,
           searchable: false,
           responsivePriority: 3,
-          checkboxes: true,
+          checkboxes: false,
           render: function () {
-            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-          },
-          checkboxes: {
-            selectAllRender: '<input type="checkbox" class="form-check-input">'
+            return '';
           }
         }, {
           targets: 2,
@@ -299,7 +190,7 @@ $(function () {
           // Label
           targets: -2,
           render: function (data, type, full, meta) {
-            var $status_number = full['status'];
+            var $status_number = full['order_status'];
             var $status = {
               1: {
                 title: 'Current',
@@ -334,17 +225,18 @@ $(function () {
           orderable: false,
           searchable: false,
           render: function (data, type, full, meta) {
-                const htmlCode = `
+            const htmlCode = `
                 <div class="d-inline-block">
                     <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end m-0">
-                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bx-info-circle"></i> detail</a></li>
-                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bxs-edit"></i> Edit</a></li>
-                        <li><a href="javascript:;" class="dropdown-item text-danger delete-record"><i class="bx bxs-trash"></i> Delete</a></li>
+                        <li><a href="javascript:;" class="dropdown-item view-order"><i class="bx bxs-info-circle"></i> 정보</a></li>
+                        <li><a href="javascript:;" class="dropdown-item edit-order"><i class="bx bxs-edit"></i> 수정</a></li>
+                        <li><a href="javascript:;" class="dropdown-item text-danger delete-order"><i class="bx bxs-trash"></i> 삭제</a></li>
                     </ul>
                 </div>
             `;
-              return (htmlCode );          }
+            return (htmlCode);
+          }
         }
       ],
       order: [
@@ -522,8 +414,8 @@ $(function () {
             }
           ]
         }, {
-          text: '<i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Record</span>',
-          className: 'create-new btn btn-primary'
+          text: '<i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">주문 추가</span>',
+          className: 'add-order btn btn-primary'
         }
       ],
       responsive: {
@@ -557,7 +449,269 @@ $(function () {
       }
     });
     $('div.head-label').html('<h5 class="card-title mb-0">DataTable with Buttons</h5>');
+  const TagifyUserListEl = document.querySelector('#TagifyUserList');
+
+  const usersList = [
+    {
+      value: 1,
+      name: 'hyeon3053',
+      avatar: 'https://i.pravatar.cc/80?img=1',
+      email: 'jhattersley0@ucsd.edu'
+    }, {
+      value: 2,
+      name: 'Antons Esson',
+      avatar: 'https://i.pravatar.cc/80?img=2',
+      email: 'aesson1@ning.com'
+    }, {
+      value: 3,
+      name: 'Ardeen Batisse',
+      avatar: 'https://i.pravatar.cc/80?img=3',
+      email: 'abatisse2@nih.gov'
+    }, {
+      value: 4,
+      name: 'Graeme Yellowley',
+      avatar: 'https://i.pravatar.cc/80?img=4',
+      email: 'gyellowley3@behance.net'
+    }, {
+      value: 5,
+      name: 'Dido Wilford',
+      avatar: 'https://i.pravatar.cc/80?img=5',
+      email: 'dwilford4@jugem.jp'
+    }, {
+      value: 6,
+      name: 'Celesta Orwin',
+      avatar: 'https://i.pravatar.cc/80?img=6',
+      email: 'corwin5@meetup.com'
+    }, {
+      value: 7,
+      name: 'Sally Main',
+      avatar: 'https://i.pravatar.cc/80?img=7',
+      email: 'smain6@techcrunch.com'
+    }, {
+      value: 8,
+      name: 'Grethel Haysman',
+      avatar: 'https://i.pravatar.cc/80?img=8',
+      email: 'ghaysman7@mashable.com'
+    }, {
+      value: 9,
+      name: 'Marvin Mandrake',
+      avatar: 'https://i.pravatar.cc/80?img=9',
+      email: 'mmandrake8@sourceforge.net'
+    }, {
+      value: 10,
+      name: 'Corrie Tidey',
+      avatar: 'https://i.pravatar.cc/80?img=10',
+      email: 'ctidey9@youtube.com'
+    }
+  ];
+
+  function tagTemplate(tagData) {
+    console.log(tagData)
+    return `
+    <tag title="${tagData.title || tagData.email}"
+      contenteditable='false'
+      spellcheck='false'
+      tabIndex="-1"
+      class="${this.settings.classNames.tag} ${tagData.class
+      ? tagData.class
+      : ''}"
+      ${this.getAttributes(tagData)}
+    >
+      <div>
+        <span class='tagify__tag-text'>${tagData.name}</span>
+      </div>
+    </tag>
+  `;
   }
+
+  function suggestionItemTemplate(tagData) {
+    return `
+    <div ${this.getAttributes(tagData)}
+      class='tagify__dropdown__item align-items-center ${tagData.class
+      ? tagData.class
+      : ''}'
+      tabindex="0"
+      role="option"
+    >
+      ${
+    tagData.avatar
+      ? `<div class='tagify__dropdown__item__avatar-wrap'>
+          <img onerror="this.style.visibility='hidden'" src="${tagData.avatar}">
+        </div>`
+      : ''}
+      <div class="fw-medium">${tagData.name}</div>
+      <span>${tagData.email}</span>
+    </div>
+  `;
+  }
+
+  function dropdownHeaderTemplate(suggestions) {
+    return `
+        <div class="${this.settings.classNames.dropdownItem}">
+            <span>${suggestions.length} members</span>
+        </div>
+    `;
+  }
+  let TagifyUserList = new Tagify(TagifyUserListEl, {
+    mode: "select",
+    tagTextProp: 'name', // very important since a custom template is used with this property as text. allows typing a "value" or a "name" to match input with whitelist
+    enforceWhitelist: true,
+    skipInvalid: true, // do not remporarily add invalid tags
+    dropdown: {
+      classname: 'users-list',
+      searchKeys: ['name'] // very important to set by which keys to search for suggesttions when typing
+    },
+    templates: {
+      tag: tagTemplate,
+      dropdownItem: suggestionItemTemplate,
+      dropdownHeader: dropdownHeaderTemplate
+    },
+    whitelist: usersList
+  });
+  const formAddNewRecord = document.getElementById('form-add-new-record');
+  let orderInputs =   [
+  'order_date',
+  'order_cnt',
+  'order_price',
+  'order_tax',
+  'order_total',
+  'comment',
+  'order_delivery_place'
+]
+  setTimeout(() => {
+    const addOrder = document.querySelector('.add-order'),
+      editOrder = document.querySelector('.edit-order'),
+      deleteOrder = document.querySelector('.delete-order');
+    offCanvasElement = document.querySelector('#add-new-record');
+
+    if (addOrder) {
+      addOrder.addEventListener('click', function () {
+        offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+        offCanvasEl.show();
+      });
+    }
+    let data = null;
+    if (deleteOrder) {
+      deleteOrder.addEventListener('click', function (e) {
+        const tr = $(e.target).closest('tr');
+        let data = dt_basic
+          .row(tr)
+          .data();
+        console.log(data)
+        offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+       orderInputs.forEach((item) => {
+          formAddNewRecord
+            .querySelector(`[name="${item}"]`)
+            .value = data[item]
+          formAddNewRecord
+            .querySelector(`[name="${item}"]`)
+            .setAttribute('readonly', true);
+        });
+        $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
+        $(".submit").text('삭제')
+        formAddNewRecord.action = '/order/order/delete/' + data['id'];
+        offCanvasEl.show();
+      });
+    }
+    if (editOrder) {
+      editOrder.addEventListener('click', function (e) {
+        const tr = $(e.target).closest('tr');
+        console.log(tr)
+        data = dt_basic.row(tr).data()
+        console.log(data)
+          offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+          orderInputs.forEach((item) => {
+          formAddNewRecord
+            .querySelector(`[name="${item}"]`)
+            .value = data[item]
+        });
+        $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
+        formAddNewRecord.action = '/order/order/edit/' + data['id'];
+        $(".submit").text('수정')
+        offCanvasEl.show();
+      });
+    }
+  }, 200)
+
+  // Form validation for Add new record
+  fv = FormValidation.formValidation(formAddNewRecord, {
+    fields: {
+      order_date: {
+        validators: {
+          notEmpty: {
+            message: '주문일자는 필수입니다.'
+          }
+        }
+      },
+      order_cnt: {
+        validators: {
+          notEmpty: {
+            message: '주문수량은 필수입니다.'
+          }
+        }
+      },
+      order_price: {
+        validators: {
+          notEmpty: {
+            message: '공급가는 필수입니다.'
+          }
+        }
+      }
+    },
+    plugins: {
+      trigger: new FormValidation
+        .plugins
+        .Trigger(),
+      bootstrap5: new FormValidation
+        .plugins
+        .Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          // eleInvalidClass: '',
+          eleValidClass: '',
+          rowSelector: '.col-sm-12'
+        }),
+      submitButton: new FormValidation
+        .plugins
+        .SubmitButton(),
+      defaultSubmit: new FormValidation
+        .plugins
+        .DefaultSubmit(),
+      autoFocus: new FormValidation
+        .plugins
+        .AutoFocus()
+    },
+    init: instance => {
+      instance.on('plugins.message.placed', function (e) {
+        if (e.element.parentElement.classList.contains('input-group')) {
+          e
+            .element
+            .parentElement
+            .insertAdjacentElement('afterend', e.messageElement);
+        }
+      });
+    }
+  });
+
+  // FlatPickr Initialization & Validation
+  flatpickr(formAddNewRecord.querySelector('[name="order_date"]'), {
+    enableTime: false,
+    // See https://flatpickr.js.org/formatting/
+    dateFormat: 'Y-m-d',
+    // After selecting a date, we need to revalidate the field
+    onChange: function () {
+      fv.revalidateField('order_date');
+    }
+  });
+
+});
+
+$("#order_price").on('input', function () {
+  var order_price = $(this).val();
+  var order_cnt = $("#order_cnt").val();
+  var order_total = order_price * order_cnt;
+  var order_tax = parseInt(order_total * 0.1);
+  $("#order_tax").val(order_tax);
+  $("#order_total").val(order_total);
 });
 </script>
 

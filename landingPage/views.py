@@ -23,7 +23,7 @@ def register(request):
         username = email[:email.find("@")]
         if password == confirmPassword:
             user = User.objects.create_user(username=username, password=password, email=email)
-            UserMaster.objects.create(user=user, custom_name=customer_name, licensee_no=licensee_no, owner_name=owner_name, charge_name=charge_pos, office_email=email)
+            UserMaster.objects.create(user=user)
             login(request, user)
             return redirect("dashboard")
         else:

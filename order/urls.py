@@ -25,5 +25,9 @@ urlpatterns = [
     path("item", item, name = "item"),
     path("build", build, name = "build"),
     path("items", items, name = "items"),
-    path("items/<int:id>", item_id, name = "item_id")
+    path("item/edit/<int:id>", item_edit, name = "item_edit"),
+    path("item/delete/<int:id>", item_delete, name = "item_delete"),
+    path("orders", orders, name = "orders"),
+    path("order/edit/<int:id>", order_edit, name = "order_edit"),
+    path("order/delete/<int:id>", order_delete, name = "order_delete")
 ]

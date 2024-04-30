@@ -30,52 +30,38 @@
       <div class="modal-dialog modal-lg modal-simple modal-edit-user">
         <div class="modal-content p-3 p-md-5">
           <div class="modal-body">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" atda-bs-dismiss="modal" aria-label="Close"></button>
             <div class="text-center mb-4">
-              <h3>아이템 추가</h3>
+              <h3 class="title">추가</h3>
             </div>
             <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'items' %}" method="POST">
               {% csrf_token %}
-              <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="standard_price">가격</label>
-                <div class="input-group input-group-merge">
-                    <span id="standard_price" class="input-group-text"><i class="bx bx-dollar"></i></span>
-                    <input
-                        type="number"
-                        id="standard_price"
-                        name="standard_price"
-                        class="form-control dt-salary"
-                        placeholder="12000"
-                        aria-label="12000"
-                        aria-describedby="standard_price" />
-                </div>
-            </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="itemCode">품번</label>
+                <label class="form-label" for="item_code">품번</label>
                 <input
                     type="text"
-                    id="itemCode"
-                    name="itemCode"
+                    id="item_code"
+                    name="item_code"
                     class="form-control"
                     placeholder="Enter item code"
                     aria-label="Enter item code" />
             </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="itemName">품명</label>
+                <label class="form-label" for="item_name">품명</label>
                 <input
                     type="text"
-                    id="itemName"
-                    name="itemName"
+                    id="item_name"
+                    name="item_name"
                     class="form-control"
                     placeholder="Enter item name"
                     aria-label="Enter item name" />
             </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="itemType">유형</label>
+                <label class="form-label" for="item_type">유형</label>
                 <input
                     type="text"
-                    id="itemType"
-                    name="itemType"
+                    id="item_type"
+                    name="item_type"
                     class="form-control"
                     placeholder="Enter item type"
                     aria-label="Enter item type" />
@@ -123,29 +109,17 @@
             <div class="col-sm-12 col-md-6">
                 <label class="form-label" for="standardPrice">표준단가</label>
                 <div class="input-group input-group-merge">
-                    <span id="standardPrice2" class="input-group-text"><i class="bx bx-dollar"></i></span>
+                    <span class="input-group-text"><i class="bx bx-dollar"></i></span>
                     <input
                         type="number"
-                        id="standardPrice"
-                        name="standardPrice"
+                        id="standard_price"
+                        name="standard_price"
                         class="form-control dt-salary"
                         placeholder="Enter standard price"
                         aria-label="Enter standard price"
-                        aria-describedby="standardPrice2" />
+                        aria-describedby="standard_price" />
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="deleteFlag">삭제여부</label>
-                <input
-                    type="text"
-                    id="deleteFlag"
-                    name="deleteFlag"
-                    class="form-control"
-                    placeholder="Enter delete flag"
-                    aria-label="Enter delete flag" />
-            </div>
-            
-              
+            </div>     
               <div class="col-sm-12 mt-3">
                 <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">추가</button>
                 <button type="reset" class="btn btn-outline-info" data-bs-dismiss="modal">초기화</button>
@@ -169,21 +143,21 @@
                   }
                 }
               },
-              itemCode: {
+              item_code: {
                 validators: {
                   notEmpty: {
                     message: '품번은 필수입력입니다.'
                   }
                 }
               },
-              itemName: {
+              item_name: {
                 validators: {
                   notEmpty: {
                     message: '품명은 필수입력입니다.'
                   }
                 }
               },
-              itemType: {
+              item_type: {
                 validators: {
                   notEmpty: {
                     message: '제품 유형은 필수입력입니다.'
@@ -257,12 +231,9 @@
             orderable: false,
             searchable: false,
             responsivePriority: 3,
-            checkboxes: true,
+            checkboxes: false,
             render: function () {
-              return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-            },
-            checkboxes: {
-              selectAllRender: '<input type="checkbox" class="form-check-input">'
+              return '';
             }
           },
           {
@@ -273,25 +244,37 @@
           {
             responsivePriority: 1,
             targets: 4
-          },
-          {
+          },{
             // Label
-            targets: -2,
+            targets: -3,
             render: function (data, type, full, meta) {
-              var $status_number = full['status'];
+              var $status_number = full['level'];
               var $status = {
-                1: { title: 'Current', class: 'bg-label-primary' },
-                2: { title: 'Professional', class: ' bg-label-success' },
-                3: { title: 'Rejected', class: ' bg-label-danger' },
-                4: { title: 'Resigned', class: ' bg-label-warning' },
-                5: { title: 'Applied', class: ' bg-label-info' }
+                1: {
+                  title: 'level 1',
+                  class: 'bg-label-primary'
+                },
+                2: {
+                  title: 'level 2',
+                  class: ' bg-label-success'
+                },
+                3: {
+                  title: 'level 3',
+                  class: ' bg-label-danger'
+                },
+                4: {
+                  title: 'level 4',
+                  class: ' bg-label-warning'
+                },
+                5: {
+                  title: 'level 5',
+                  class: ' bg-label-info'
+                }
               };
               if (typeof $status[$status_number] === 'undefined') {
                 return data;
               }
-              return (
-                '<span class="badge ' + $status[$status_number].class + '">' + $status[$status_number].title + '</span>'
-              );
+              return ('<span class="badge ' + $status[$status_number].class + '">' + $status[$status_number].title + '</span>');
             }
           },
           {
@@ -305,9 +288,8 @@
                 <div class="d-inline-block">
                     <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end m-0">
-                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bx-info-circle"></i> detail</a></li>
-                        <li><a href="javascript:;" class="dropdown-item"><i class="bx bxs-edit"></i> Edit</a></li>
-                        <li><a href="javascript:;" class="dropdown-item text-danger delete-record"><i class="bx bxs-trash"></i> Delete</a></li>
+                        <li><a href="javascript:;" class="dropdown-item" data-bs-toggle="modal" action="patch" data-bs-target="#item"><i class="bx bxs-edit"></i> 수정</a></li>
+                        <li><a href="javascript:;" class="dropdown-item text-danger delete-record" data-bs-toggle="modal" action="delete" data-bs-target="#item"><i class="bx bxs-trash"></i> 삭제</a></li>
                     </ul>
                 </div>
             `;
@@ -461,8 +443,8 @@
             ]
           },
           {
-            text: '<i class="bx bx-plus me-sm-1"></i><a href=" javascript:void(0)" class="d-none d-sm-inline-block text-white" data-bs-toggle="modal" data-bs-target="#item">아이템 추가</a>',
-            className: 'create-new btn btn-primary'
+            text: '<a href=" javascript:void(0)" class="d-none d-sm-inline-block text-white" action="post" data-bs-toggle="modal" data-bs-target="#item"> <i class="bx bx-plus me-sm-1"></i> 추가</a>',
+            className: 'create-new btn btn-primary',
           }
         ],
         responsive: {
@@ -497,8 +479,38 @@
             }
           }
         }
-      });
+      })
       $('div.head-label').html('<h5 class="card-title mb-0">품목</h5>');
+      $("#item").on('show.bs.modal', function (e) {
+        const formRecord = document.getElementById('form-add-new-record');
+        let tr = $(e.relatedTarget).closest('tr');
+        let rest = e.relatedTarget.getAttribute('action');
+        switch (rest) {
+          case 'patch':
+            formRecord.action = `/order/item/edit/${dt_basic.row(tr).data().id}`;
+            $(formRecord).find('button[type="submit"]').text('수정');
+            $('h3.title').text('수정');
+            break;
+          case 'delete':
+            formRecord.action = `/order/item/delete/${dt_basic.row(tr).data().id}`;
+            $(formRecord).find('input').attr('readonly', true);
+            $(formRecord).find('button[type="submit"]').text('삭제');
+            $('h3.title').text('삭제');
+            break;
+          default:
+            formRecord.action = '{% url 'items' %}';
+            $(formRecord).find('button[type="submit"]').text('추가');
+            $('h3.title').text('추가');
+            break;
+        }
+        console.log(rest)
+        let data = dt_basic.row(tr).data();
+        if(data){
+          ['item_code', 'item_name', 'item_type', 'specification', 'model', 'maker', 'level','standard_price'].forEach((key) => {
+            formRecord.querySelector(`#${key}`).value = data[key];
+          });
+        }
+      });
       });
     </script>
   </div>
