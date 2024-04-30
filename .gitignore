@@ -1,7 +1,7 @@
 media/
 .idea/
 __pycache__
-main/__pycache__
+button/__pycache__
 *.pyc
 venv/
 db.sqlite3
