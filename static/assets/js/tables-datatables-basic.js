@@ -29,13 +29,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
       }
     }, 200);
 
+    if(newModal)
+
     // Form validation for Add new record
     fv = FormValidation.formValidation(formAddNewRecord, {
       fields: {
         basicFullname: {
           validators: {
             notEmpty: {
-              message: 'The name is required'
+              message: '주문자 이름은 필수입니다.'
             }
           }
         },
@@ -59,18 +61,18 @@ document.addEventListener('DOMContentLoaded', function (e) {
         basicDate: {
           validators: {
             notEmpty: {
-              message: 'Joining Date is required'
+              message: '주문일자는 필수입니다.'
             },
             date: {
               format: 'MM/DD/YYYY',
-              message: 'The value is not a valid date'
+              message: '올바르지 않은 날짜 형식입니다.'
             }
           }
         },
         basicSalary: {
           validators: {
             notEmpty: {
-              message: 'Basic Salary is required'
+              message: '가격은 필수입력입니다.'
             }
           }
         }
@@ -106,6 +108,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
         fv.revalidateField('basicDate');
       }
     });
+    flatpickr(formAddNewRecord.querySelector('[name="basicDate2"]'), {
+      enableTime: false,
+      // See https://flatpickr.js.org/formatting/
+      dateFormat: 'm/d/Y',
+      // After selecting a date, we need to revalidate the field
+      onChange: function () {
+        fv.revalidateField('basicDate2');
+      }
+    });
   })();
 });
 
@@ -128,9 +139,10 @@ $(function () {
         { data: 'id' },
         { data: 'id' },
         { data: 'full_name' },
-        { data: 'email' },
+        { data: 'city'},
         { data: 'start_date' },
-        { data: 'salary' },
+        { data: 'count'},
+        { data: 'price' },
         { data: 'status' },
         { data: '' }
       ],
@@ -448,7 +460,7 @@ $(function () {
       $new_post = $('.add-new-record .dt-post').val(),
       $new_email = $('.add-new-record .dt-email').val(),
       $new_date = $('.add-new-record .dt-date').val(),
-      $new_salary = $('.add-new-record .dt-salary').val();
+      $new_price = $('.add-new-record .dt-salary').val();
 
     if ($new_name != '') {
       dt_basic.row
@@ -458,7 +470,7 @@ $(function () {
           post: $new_post,
           email: $new_email,
           start_date: $new_date,
-          salary: '$' + $new_salary,
+          price: '$' + $new_price,
           status: 5
         })
         .draw();
@@ -485,7 +497,7 @@ $(function () {
         { data: 'email' },
         { data: 'city' },
         { data: 'post' },
-        { data: 'salary' },
+        { data: 'price' },
         { data: 'status' },
         { data: '' }
       ],
@@ -551,7 +563,7 @@ $(function () {
         { data: 'email' },
         { data: 'city' },
         { data: 'start_date' },
-        { data: 'salary' },
+        { data: 'price' },
         { data: 'status' },
         { data: '' }
       ],
@@ -689,7 +701,7 @@ $(function () {
         { data: 'post' },
         { data: 'email' },
         { data: 'start_date' },
-        { data: 'salary' },
+        { data: 'price' },
         { data: 'status' },
         { data: '' }
       ],

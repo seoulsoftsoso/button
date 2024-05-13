@@ -3,7 +3,7 @@
 [data-bs-theme=light] {
   --bs-blue: #007bff;
   --bs-indigo: #6610f2;
-  --bs-purple: #696cff;
+  --bs-purple: #3D170F;
   --bs-pink: #e83e8c;
   --bs-red: #ff3e1d;
   --bs-orange: #fd7e14;
@@ -17,7 +17,7 @@
   --bs-gray-dark: rgba(0, 0, 0, 0.45);
   --bs-gray-25: rgba(255, 255, 255, 0.015);
   --bs-gray-50: rgba(255, 255, 255, 0.03);
-  --bs-primary: #696cff;
+  --bs-primary: #3D170F;
   --bs-secondary: #8592a3;
   --bs-success: #71dd37;
   --bs-info: #03c3ec;
@@ -61,7 +61,7 @@
   --bs-dark-border-subtle: #7c7db6;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --bs-font-sans-serif: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --bs-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-root-font-size: 16px;
@@ -84,10 +84,10 @@
   --bs-tertiary-bg: rgba(255, 255, 255, 0.8);
   --bs-tertiary-bg-rgb: 255, 255, 255;
   --bs-heading-color: #cbcbe2;
-  --bs-link-color: #696cff;
+  --bs-link-color: #3D170F;
   --bs-link-color-rgb: 105, 108, 255;
   --bs-link-decoration: none;
-  --bs-link-hover-color: #5f61e6;
+  --bs-link-hover-color: #2F110B;
   --bs-link-hover-color-rgb: 95, 97, 230;
   --bs-code-color: #e83e8c;
   --bs-highlight-color: #a3a4cc;
@@ -4358,7 +4358,7 @@ textarea.form-control-lg {
   --bs-progress-border-radius: 10rem;
   --bs-progress-box-shadow: var(--bs-box-shadow-inset);
   --bs-progress-bar-color: #fff;
-  --bs-progress-bar-bg: #696cff;
+  --bs-progress-bar-bg: #3D170F;
   --bs-progress-bar-transition: width 0.6s ease;
   display: flex;
   height: var(--bs-progress-height);
@@ -12213,7 +12213,7 @@ html:not([dir=rtl]) .toast.bs-toast .toast-header .btn-close {
 }
 
 .border-primary {
-  border-color: #696cff !important;
+  border-color: #3D170F !important;
 }
 
 .border-secondary {
@@ -22499,7 +22499,7 @@ html:not([dir=rtl]) .switches-stacked .switch {
 }
 .timeline .timeline-item .timeline-indicator i,
 .timeline .timeline-item .timeline-indicator-advanced i {
-  color: #696cff;
+  color: #3D170F;
 }
 .timeline .timeline-item .timeline-indicator-advanced {
   background-color: #2b2c40;
@@ -22524,7 +22524,7 @@ html:not([dir=rtl]) .switches-stacked .switch {
   height: 0.75rem;
   width: 0.75rem;
   border-radius: 50%;
-  background-color: #696cff;
+  background-color: #3D170F;
 }
 [dir=rtl] .timeline .timeline-item .timeline-point {
   left: auto;
