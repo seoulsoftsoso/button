@@ -48,7 +48,7 @@ def dashboard2(request):
 
 
 def registerSelect(request):
-    return render(request, "auth/RegisterSelect.html")
+    return render(request, "auth/registerSelect.html")
 
 def register(request):
     if request.method == "POST":
