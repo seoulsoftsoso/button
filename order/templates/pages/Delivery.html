@@ -33,7 +33,7 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-grow-1">
-      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'orders' %}" method="POST">
+      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'orders' %}" method="POST" href="{% url 'orders' %}">
         {% csrf_token %}
         <div class="col-sm-12">
           <label class="form-label" for="order_date">주문일자</label>
@@ -230,8 +230,8 @@ $(function () {
                     <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end m-0">
                         <li><a href="/order/build/${full.id}" class="dropdown-item"><i class="bx bxs-edit"></i> 주문서 작성</a></li>
-                        <li><a href="javascript:;" class="dropdown-item edit-order"><i class="bx bxs-edit"></i> 수정</a></li>
-                        <li><a href="javascript:;" class="dropdown-item text-danger delete-order"><i class="bx bxs-trash"></i> 삭제</a></li>
+                        <li><button href="javascript:;" class="dropdown-item edit-order"><i class="bx bxs-edit"></i> 수정</button></li>
+                        <li><button href="javascript:;" class="dropdown-item text-danger delete-order"><i class="bx bxs-trash"></i> 삭제</button></li>
                     </ul>
                 </div>
             `;
@@ -450,60 +450,54 @@ $(function () {
     });
     $('div.head-label').html('<h5 class="card-title mb-0">DataTable with Buttons</h5>');
   const TagifyUserListEl = document.querySelector('#TagifyUserList');
+  dt_basic_table.on('draw.dt', function () {
+      setTimeout(() => {
+    let deleteOrder = document.querySelector('.delete-order');
+      if (deleteOrder) {
+        deleteOrder.addEventListener('click', function (e) {
+          e.preventDefault();
+          offCanvasEl.show();
+          const tr = $(e.target).closest('tr');
+          let data = dt_basic
+            .row(tr)
+            .data();
+          console.log(data)
+         orderInputs.forEach((item) => {
+            formAddNewRecord
+              .querySelector(`[name="${item}"]`)
+              .value = data[item]
+            formAddNewRecord
+              .querySelector(`[name="${item}"]`)
+              .setAttribute('readonly', true);
+          });
+          $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
+          $(".submit").text('삭제')
+          formAddNewRecord.action = '/order/order/delete/' + data['id'];
+        });
+      }
+  }, 200)
 
-  const usersList = [
-    {
-      value: 1,
-      name: 'hyeon3051',
-      avatar: 'https://i.pravatar.cc/80?img=1',
-      email: 'jhattersley0@ucsd.edu'
-    }, {
-      value: 2,
-      name: 'Antons Esson',
-      avatar: 'https://i.pravatar.cc/80?img=2',
-      email: 'aesson1@ning.com'
-    }, {
-      value: 3,
-      name: 'Ardeen Batisse',
-      avatar: 'https://i.pravatar.cc/80?img=3',
-      email: 'abatisse2@nih.gov'
-    }, {
-      value: 4,
-      name: 'Graeme Yellowley',
-      avatar: 'https://i.pravatar.cc/80?img=4',
-      email: 'gyellowley3@behance.net'
-    }, {
-      value: 5,
-      name: 'Dido Wilford',
-      avatar: 'https://i.pravatar.cc/80?img=5',
-      email: 'dwilford4@jugem.jp'
-    }, {
-      value: 6,
-      name: 'Celesta Orwin',
-      avatar: 'https://i.pravatar.cc/80?img=6',
-      email: 'corwin5@meetup.com'
-    }, {
-      value: 7,
-      name: 'Sally Main',
-      avatar: 'https://i.pravatar.cc/80?img=7',
-      email: 'smain6@techcrunch.com'
-    }, {
-      value: 8,
-      name: 'Grethel Haysman',
-      avatar: 'https://i.pravatar.cc/80?img=8',
-      email: 'ghaysman7@mashable.com'
-    }, {
-      value: 9,
-      name: 'Marvin Mandrake',
-      avatar: 'https://i.pravatar.cc/80?img=9',
-      email: 'mmandrake8@sourceforge.net'
-    }, {
-      value: 10,
-      name: 'Corrie Tidey',
-      avatar: 'https://i.pravatar.cc/80?img=10',
-      email: 'ctidey9@youtube.com'
+  setTimeout(() => {
+    let editOrder = document.querySelector('.edit-order');
+    if (editOrder) {
+      editOrder.addEventListener('click', function (e) {
+        offCanvasEl.show();
+        const tr = $(e.target).closest('tr');
+        let data = dt_basic.row(tr).data()
+        orderInputs.forEach((item) => {
+          formAddNewRecord
+            .querySelector(`[name="${item}"]`)
+            .value = data[item]
+        });
+        $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
+        formAddNewRecord.action = '/order/order/edit/' + data['id'];
+        $(".data-submit").text('수정')
+      });
     }
-  ];
+  }, 200)
+
+  });
+  const usersList = {{ usersList|safe }}
 
   function tagTemplate(tagData) {
     console.log(tagData)
@@ -578,57 +572,16 @@ $(function () {
   'comment',
   'place'
 ]
-  setTimeout(() => {
-    const addOrder = document.querySelector('.add-order'),
-      editOrder = document.querySelector('.edit-order'),
-      deleteOrder = document.querySelector('.delete-order');
-    offCanvasElement = document.querySelector('#add-new-record');
 
+let offCanvasElement = document.querySelector('#add-new-record');
+let offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+
+  setTimeout(() => {
+    const addOrder = document.querySelector('.add-order')
     if (addOrder) {
       addOrder.addEventListener('click', function () {
-        offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
         offCanvasEl.show();
-      });
-    }
-    let data = null;
-    if (deleteOrder) {
-      deleteOrder.addEventListener('click', function (e) {
-        const tr = $(e.target).closest('tr');
-        let data = dt_basic
-          .row(tr)
-          .data();
-        console.log(data)
-        offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
-       orderInputs.forEach((item) => {
-          formAddNewRecord
-            .querySelector(`[name="${item}"]`)
-            .value = data[item]
-          formAddNewRecord
-            .querySelector(`[name="${item}"]`)
-            .setAttribute('readonly', true);
-        });
-        $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
-        $(".submit").text('삭제')
-        formAddNewRecord.action = '/order/order/delete/' + data['id'];
-        offCanvasEl.show();
-      });
-    }
-    if (editOrder) {
-      editOrder.addEventListener('click', function (e) {
-        const tr = $(e.target).closest('tr');
-        console.log(tr)
-        data = dt_basic.row(tr).data()
-        console.log(data)
-          offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
-          orderInputs.forEach((item) => {
-          formAddNewRecord
-            .querySelector(`[name="${item}"]`)
-            .value = data[item]
-        });
-        $(TagifyUserListEl).val(data['full_name']).trigger('tagify:updated');
-        formAddNewRecord.action = '/order/order/edit/' + data['id'];
-        $(".submit").text('수정')
-        offCanvasEl.show();
+        $(".data-submit").text('추가')
       });
     }
   }, 200)
