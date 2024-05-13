@@ -49,29 +49,29 @@
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="order_cnt">주문수량</label>
-          <input type="number" id="order_cnt" name="order_cnt" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
+          <label class="form-label" for="cnt">주문수량</label>
+          <input type="number" id="cnt" name="cnt" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="order_price">공급가</label>
+          <label class="form-label" for="price">공급가</label>
           <div class="input-group input-group-merge">
-            <span id="order_price2" class="input-group-text">
+            <span id="price2" class="input-group-text">
               <i class="bx bx-dollar"></i>
             </span>
-            <input type="number" id="order_price" name="order_price" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="order_price2"/>
+            <input type="number" id="price" name="price" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="price2"/>
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="order_tax">부가세</label>
-          <input type="number" id="order_tax" name="order_tax" class="form-control" placeholder="Enter order_tax" readonly="readonly"/>
+          <label class="form-label" for="tax">부가세</label>
+          <input type="number" id="tax" name="tax" class="form-control" placeholder="Enter tax" readonly="readonly"/>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="order_total">합계</label>
+          <label class="form-label" for="total">합계</label>
           <div class="input-group input-group-merge">
-            <span id="order_total2" class="input-group-text">
+            <span id="total2" class="input-group-text">
               <i class="bx bx-dollar"></i>
             </span>
-            <input type="number" id="order_total" name="order_total" class="form-control dt-salary" readonly="readonly"/>
+            <input type="number" id="total" name="total" class="form-control dt-salary" readonly="readonly"/>
           </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -79,8 +79,8 @@
           <input id="comment" name="comment" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
         </div>
         <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="order_delivery_place">납품처</label>
-          <input id="order_delivery_place" name="order_delivery_place" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
+          <label class="form-label" for="place">납품처</label>
+          <input id="place" name="place" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
         </div>
 
         <div class="col-sm-12 mt-3">
@@ -110,15 +110,15 @@ $(function () {
         }, {
           data: ''
         }, {
-          data: 'order_delivery_place'
+          data: 'place'
         }, {
           data: 'order_date'
         }, {
-          data: 'order_cnt'
+          data: 'cnt'
         }, {
-          data: 'order_tax'
+          data: 'tax'
         }, {
-          data: 'order_total'
+          data: 'total'
         }, {
           data: ''
         }, {
@@ -190,7 +190,7 @@ $(function () {
           // Label
           targets: -2,
           render: function (data, type, full, meta) {
-            var $status_number = full['order_status'];
+            var $status_number = full['status'];
             var $status = {
               1: {
                 title: 'Current',
@@ -229,7 +229,7 @@ $(function () {
                 <div class="d-inline-block">
                     <a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end m-0">
-                        <li><a href="javascript:;" class="dropdown-item view-order"><i class="bx bxs-info-circle"></i> 정보</a></li>
+                        <li><a href="/order/build/${full.id}" class="dropdown-item"><i class="bx bxs-edit"></i> 주문서 작성</a></li>
                         <li><a href="javascript:;" class="dropdown-item edit-order"><i class="bx bxs-edit"></i> 수정</a></li>
                         <li><a href="javascript:;" class="dropdown-item text-danger delete-order"><i class="bx bxs-trash"></i> 삭제</a></li>
                     </ul>
@@ -243,9 +243,9 @@ $(function () {
         [2, 'desc']
       ],
       dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-      displayLength: 7,
+      displayLength: 1,
       lengthMenu: [
-        7,
+        1,
         10,
         25,
         50,
@@ -454,7 +454,7 @@ $(function () {
   const usersList = [
     {
       value: 1,
-      name: 'hyeon3053',
+      name: 'hyeon3051',
       avatar: 'https://i.pravatar.cc/80?img=1',
       email: 'jhattersley0@ucsd.edu'
     }, {
@@ -571,12 +571,12 @@ $(function () {
   const formAddNewRecord = document.getElementById('form-add-new-record');
   let orderInputs =   [
   'order_date',
-  'order_cnt',
-  'order_price',
-  'order_tax',
-  'order_total',
+  'cnt',
+  'price',
+  'tax',
+  'total',
   'comment',
-  'order_delivery_place'
+  'place'
 ]
   setTimeout(() => {
     const addOrder = document.querySelector('.add-order'),
@@ -633,7 +633,7 @@ $(function () {
     }
   }, 200)
 
-  // Form validation for Add new record
+  // Form validation for Add ne  record
   fv = FormValidation.formValidation(formAddNewRecord, {
     fields: {
       order_date: {
@@ -643,14 +643,14 @@ $(function () {
           }
         }
       },
-      order_cnt: {
+      cnt: {
         validators: {
           notEmpty: {
             message: '주문수량은 필수입니다.'
           }
         }
       },
-      order_price: {
+      price: {
         validators: {
           notEmpty: {
             message: '공급가는 필수입니다.'
@@ -705,13 +705,13 @@ $(function () {
 
 });
 
-$("#order_price").on('input', function () {
-  var order_price = $(this).val();
-  var order_cnt = $("#order_cnt").val();
-  var order_total = order_price * order_cnt;
-  var order_tax = parseInt(order_total * 0.1);
-  $("#order_tax").val(order_tax);
-  $("#order_total").val(order_total);
+$("#price").on('input', function () {
+  var price = $(this).val();
+  var cnt = $("#cnt").val();
+  var total = price * cnt;
+  var tax = parseInt(total * 0.1);
+  $("#tax").val(tax);
+  $("#total").val(total);
 });
 </script>
 

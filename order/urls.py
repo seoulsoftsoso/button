@@ -23,11 +23,15 @@ from .views import *
 urlpatterns = [
     path("delivery", delivery, name = "delivery"),
     path("item", item, name = "item"),
-    path("build", build, name = "build"),
+    path("build/<int:order>", build, name = "build"),
     path("items", items, name = "items"),
     path("item/edit/<int:id>", item_edit, name = "item_edit"),
     path("item/delete/<int:id>", item_delete, name = "item_delete"),
     path("orders", orders, name = "orders"),
     path("order/edit/<int:id>", order_edit, name = "order_edit"),
-    path("order/delete/<int:id>", order_delete, name = "order_delete")
+    path("order/delete/<int:id>", order_delete, name = "order_delete"),
+    path("addBom/<int:order>", addBom, name = "addBom"),
+    path("updateBom", updateBom, name = "updateBom"),
+    path("deleteBom", deleteBom, name = "deleteBom"),
+    path("boms", boms, name = "boms"),
 ]

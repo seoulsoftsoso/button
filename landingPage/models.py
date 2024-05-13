@@ -5,8 +5,8 @@ from django.db import models
 
 class UserMaster(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_code = models.CharField(max_length=255)
-    user_name = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     join_date = models.DateField(null=True)
     address = models.CharField(max_length=255, null=True)
     tel = models.CharField(max_length=255, null=True)
@@ -14,13 +14,13 @@ class UserMaster(models.Model):
     signature = models.ImageField(upload_to='user_signatures/', null=True)
     custom = models.ForeignKey('CustomerMaster', on_delete=models.CASCADE, null=True)
     delete_flag = models.CharField(max_length=1, choices=(('Y', 'Yes'), ('N', 'No')))
+    is_master = models.CharField(max_length=1, choices=(('Y', 'Yes'), ('N', 'No')))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    created_by_id = models.ForeignKey('self', related_name='user_created_by', on_delete=models.CASCADE)
-    updated_by_id = models.ForeignKey('self', related_name='user_updated_by', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='user_created_by', on_delete=models.CASCADE)
+    updated_by = models.ForeignKey(User, related_name='user_updated_by', on_delete=models.CASCADE)
 
 class CustomerMaster(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     customer_name = models.CharField(max_length=255)
     licensee_no = models.CharField(max_length=255)
     owner_name = models.CharField(max_length=255)

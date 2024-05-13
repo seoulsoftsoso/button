@@ -37,31 +37,31 @@
             <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'items' %}" method="POST">
               {% csrf_token %}
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="item_code">품번</label>
+                <label class="form-label" for="code">품번</label>
                 <input
                     type="text"
-                    id="item_code"
-                    name="item_code"
+                    id="code"
+                    name="code"
                     class="form-control"
                     placeholder="Enter item code"
                     aria-label="Enter item code" />
             </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="item_name">품명</label>
+                <label class="form-label" for="name">품명</label>
                 <input
                     type="text"
-                    id="item_name"
-                    name="item_name"
+                    id="name"
+                    name="name"
                     class="form-control"
                     placeholder="Enter item name"
                     aria-label="Enter item name" />
             </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="item_type">유형</label>
+                <label class="form-label" for="type">유형</label>
                 <input
                     type="text"
-                    id="item_type"
-                    name="item_type"
+                    id="type"
+                    name="type"
                     class="form-control"
                     placeholder="Enter item type"
                     aria-label="Enter item type" />
@@ -87,24 +87,23 @@
                     aria-label="Enter model" />
             </div>
             <div class="col-sm-12 col-md-6">
-                <label class="form-label" for="maker">제조사</label>
+                <label class="form-label" for="brand">제조사</label>
                 <input
                     type="text"
-                    id="maker"
-                    name="maker"
+                    id="brand"
+                    name="brand"
                     class="form-control"
-                    placeholder="Enter maker"
-                    aria-label="Enter maker" />
+                    placeholder="Enter brand"
+                    aria-label="Enter brand" />
             </div>
             <div class="col-sm-12 col-md-6">
                 <label class="form-label" for="level">레벨</label>
-                <input
-                    type="text"
-                    id="level"
-                    name="level"
-                    class="form-control"
-                    placeholder="Enter level"
-                    aria-label="Enter level" />
+                <select class="form-select select2" id="level" name="level">
+                    <option value="1">컨테이너<span>(level1)</span></option>
+                    <option value="2">컨트롤러<span>(level2)</span></option>
+                    <option value="3">제품<span>(level3)</span></option>
+
+                </select>
             </div>
             <div class="col-sm-12 col-md-6">
                 <label class="form-label" for="standardPrice">표준단가</label>
@@ -143,21 +142,21 @@
                   }
                 }
               },
-              item_code: {
+              code: {
                 validators: {
                   notEmpty: {
                     message: '품번은 필수입력입니다.'
                   }
                 }
               },
-              item_name: {
+              name: {
                 validators: {
                   notEmpty: {
                     message: '품명은 필수입력입니다.'
                   }
                 }
               },
-              item_type: {
+              type: {
                 validators: {
                   notEmpty: {
                     message: '제품 유형은 필수입력입니다.'
@@ -198,17 +197,22 @@
       $(function () {
       var dt_basic_table = $('.datatables-basic')
       dt_basic = dt_basic_table.DataTable({
-        ajax: '{% url 'items' %}',
+        ajax: {
+          url: '{% url "items" %}',
+          dataSrc: function (json) {
+            return json.data;
+          },          
+        },
         columns: [
           { data: '' },
           { data: 'id' },
           { data: 'id' },
-          { data: 'item_code' },
-          { data: 'item_name' },
-          { data: 'item_type' },
+          { data: 'code' },
+          { data: 'name' },
+          { data: 'type' },
           { data: 'specification' },
           { data: 'model' },
-          { data: 'maker' },
+          { data: 'brand' },
           { data: 'level' },
           { data: 'standard_price' },
           { data: '' }
@@ -299,8 +303,8 @@
         ],
         order: [[2, 'desc']],
         dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-        displayLength: 7,
-        lengthMenu: [7, 10, 25, 50, 75, 100],
+        displayLength: 2,
+        lengthMenu: [2, 10, 25, 50, 75, 100],
         buttons: [
           {
             extend: 'collection',
@@ -506,9 +510,10 @@
         console.log(rest)
         let data = dt_basic.row(tr).data();
         if(data){
-          ['item_code', 'item_name', 'item_type', 'specification', 'model', 'maker', 'level','standard_price'].forEach((key) => {
+          ['code', 'name', 'type', 'specification', 'model', 'brand','standard_price'].forEach((key) => {
             formRecord.querySelector(`#${key}`).value = data[key];
           });
+          $("#level").val(data.level).trigger("change");
         }
       });
       });

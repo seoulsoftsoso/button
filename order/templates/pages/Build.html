@@ -7,7 +7,7 @@
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
     <div class="d-flex flex-column justify-content-center">
       <h5 class="mb-1 mt-3">
-        Order #32543
+        order # {{ order }} 
         <span class="badge bg-label-success me-2 ms-2">Paid</span>
         <span class="badge bg-label-info">Ready to Pickup</span>
       </h5>
@@ -19,43 +19,40 @@
     </div>
   </div>
 
-  <!-- Order Details Table -->
-
   <div class="row">
     <div class="col-12 col-lg-8">
-        <div class="card mb-4">
-            <!-- Checkbox -->
-            <div class="col-12">
-            <div class="card mb-md-0 mb-4">
-                <h5 class="card-header">
-                    <div class="d-flex align-content-center justify-content-between flex-wrap gap-2">
-                        <div class="ml-auto align-content-center">
-                            제품 설계도
-                        </div>
-                        <div>
-                        <button class="btn btn-outline-primary delete-order"><i class="bx bx-notepad"></i>&nbsp; assy 추가</button>
-                        <button class="btn btn-outline-danger delete-order"><i class="bx bx-trash"></i>&nbsp; assy 삭제</button>
-                        </div>
-                      </div>
-                    </h5>
-                <div class="card-body">
-                <div id="jstree-checkbox"></div>
+      <div class="card mb-4">
+        <!-- Checkbox -->
+        <div class="col-12">
+          <div class="card mb-md-0 mb-4">
+            <h5 class="card-header">
+              <div class="d-flex align-content-center justify-content-between flex-wrap gap-2">
+                <div class="ml-auto align-content-center">
+                  제품 설계도
                 </div>
+                <div class="d-flex align-content-center gap-2">
+                  <button class="btn btn-outline-success add-container">
+                    <i class="bx bx-cog"></i>&nbsp; 컨테이너 추가</button>
+                  </div>
+              </div>
+            </h5>
+            <div class="card-body">
+              <div id="jstree-checkbox"></div>
             </div>
-            </div>
-            <!-- /Checkbox -->
           </div>
+        </div>
+        <!-- /Checkbox -->
+      </div>
       <div class="card mb-4">
         <div class="card-header">
-            <div class="card-title">
-                <h5>제품</h5> 
-            </div>
+          <div class="card-title">
+            <h5>제품</h5>
+          </div>
         </div>
         <div class="card-datatable table-responsive">
           <table class="datatables-order-details table">
             <thead>
               <tr>
-                <th></th>
                 <th></th>
                 <th class="w-50">products</th>
                 <th class="w-25">price</th>
@@ -86,10 +83,12 @@
           </div>
         </div>
         <div class="card-footer">
-            <div class='ml-auto d-flex justify-content-end gap-2'>
-                <button class="btn btn-outline-success delete-order"><i class="bx bx-cog"></i>&nbsp; 제품 추가</button>
-                <button class="btn btn-outline-info delete-order"><i class="bx bx-edit"></i>&nbsp; 제품 수정</button>
-                </div>
+          <div class='ml-auto d-flex justify-content-end gap-2'>
+            <button class="btn btn-outline-success add-item" id="add-item">
+              <i class="bx bx-cog"></i>&nbsp; 제품 추가</button>
+            <button class="btn btn-outline-info " id="edit-item">
+              <i class="bx bx-edit"></i>&nbsp; 제품 수정</button>
+          </div>
         </div>
       </div>
       <div class="card mb-4">
@@ -168,19 +167,20 @@
       </div>
     </div>
     <div class="col-12 col-lg-4">
-        <div class="card mb-4 h-50"> 
-            <div class="card-header">
-              <h5 class="card-title m-0">배치도</h5>
-            </div>
-            <div class="card-body">
-            <img src="{% static 'assets/img/front-pages/misc/nav-item-col-img.png' %}" class="card-img-top p-1" alt="...">
-            </div>
-            <div class="card-footer">
-                <div class="ml-auto d-flex justify-content-end">
-                    <button class="btn btn-outline-success delete-order"><i class="bx bx-upload"></i>&nbsp; 의뢰</button>
-                </div>
-            </div>
+      <div class="card mb-4 h-50">
+        <div class="card-header">
+          <h5 class="card-title m-0">배치도</h5>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'assets/img/front-pages/misc/nav-item-col-img.png' %}" class="card-img-top p-1" alt="...">
+        </div>
+        <div class="card-footer">
+          <div class="ml-auto d-flex justify-content-end">
+            <button class="btn btn-outline-success" id="submit-order">
+              <i class="bx bx-upload"></i>&nbsp; 의뢰</button>
           </div>
+        </div>
+      </div>
       <div class="card mb-4">
         <div class="card-header">
           <h6 class="card-title m-0">고객 세부 정보</h6>
@@ -188,7 +188,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-start align-items-center mb-4">
             <div class="avatar me-2">
-              <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle"/>
+              <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar" class="rounded-circle"/>
             </div>
             <div class="d-flex flex-column">
               <a href="app-user-view-account.html" class="text-body text-nowrap">
@@ -499,10 +499,578 @@
   </div>
 </div>
 </footer>
-<!-- / Footer -->
+<div class="offcanvas offcanvas-end" id="add-new-record">
+<div class="offcanvas-header border-bottom">
+  <h5 class="offcanvas-title" id="exampleModalLabel">주문 등록</h5>
+  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body flex-grow-1">
+  <form class="add-new-record pt-0 row g-2" id="form-add-new-record">
+    <div class="col-12">
+      <label class="form-label" for="item">아이템</label>
+      <select id="item" class="select2 form-select" name="bom_id" data-allow-clear="true" aria-label="Select item">
+      </select>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <label class="form-label" for="order_cnt">주문수량</label>
+      <input type="number" id="order_cnt" name="order_cnt" class="form-control" placeholder="품목을 선택해 주세요" aria-label="품목을 선택해 주세요" disabled="disabled"/>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <label class="form-label" for="price">공급가</label>
+      <div class="input-group input-group-merge">
+        <span id="price2" class="input-group-text">
+          <i class="bx bx-dollar"></i>
+        </span>
+        <input type="number" id="price" name="price" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="price2"/>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <label class="form-label" for="tax">부가세</label>
+      <input type="number" id="tax" name="tax" class="form-control" placeholder="Enter tax" readonly="readonly"/>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <label class="form-label" for="order_total">합계</label>
+      <div class="input-group input-group-merge">
+        <span id="order_total2" class="input-group-text">
+          <i class="bx bx-dollar"></i>
+        </span>
+        <input type="number" id="order_total" name="order_total" class="form-control dt-salary" readonly="readonly"/>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <label class="form-label" for="comment">비고</label>
+      <input id="comment" name="comment" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
+    </div>
 
-<div class="content-backdrop fade"></div> 
+    <div class="col-sm-12 mt-3" id="formButton">
+      <button class="btn btn-primary data-submit me-sm-3 me-1" id="plus-item">추가</button>
+      <button type="reset" class="btn btn-outline-info" data-bs-dismiss="offcanvas">초기화</button>
+    </div>
+  </form>
+</div>
 </div>
 
+<div class="content-backdrop fade"></div>
+</div>
+<script>
+let tree = {{ bomTree|safe }};
+let treeData =  ({{ bomTree|safe }}).map(item => item.data)
+
+$(document).ready(function () {
+
+var dt_details_table = $('.datatables-order-details');
+if (dt_details_table.length) {
+  var dt_products = dt_details_table.DataTable({
+    data: treeData,
+    columns: [
+      {
+        data: 'id'
+      }, {
+        data: 'product_name'
+      }, {
+        data: 'price'
+      }, {
+        data: 'qty'
+      }, {
+        data: ''
+      }
+    ],
+    columnDefs: [
+      {
+        className: 'control',
+        searchable: false,
+        orderable: false,
+        responsivePriority: 2,
+        targets: 0,
+        render: function (data, type, full, meta) {
+          return '';
+        }
+      }, {
+        targets: 1,
+        responsivePriority: 1,
+        searchable: false,
+        orderable: false,
+        render: function (data, type, full, meta) {
+          var $name = full['product_name'],
+            $product_brand = full['product_info'],
+            $image = full['image'];
+          if ($image) {
+            var $output = '<img src="' + assetsPath + 'img/products/' + $image + '" alt="product-' + $name + '" class="rounded-2">';
+          } else {
+            var stateNum = Math.floor(Math.random() * 6);
+            var states = [
+              'success',
+              'danger',
+              'warning',
+              'info',
+              'dark',
+              'primary',
+              'secondary'
+            ];
+            var $state = states[stateNum],
+              $name = full['product_name'],
+              $initials = $name.match(/\b\w/g) || [];
+            $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+            $output = '<span class="avatar-initial rounded-2 bg-label-' + $state + '">' + $initials + '</span>';
+          }
+          var $row_output = '<div class="d-flex justify-content-start align-items-center text-nowrap">' + '<div class="avatar-wrapper">' + '<div class="avatar me-2">' + $output + '</div>' + '</div>' + '<div class="d-flex flex-column">' + '<h6 class="text-body mb-0">' + $name + '</h6>' + '<small class="text-muted">' + $product_brand + '</small>' + '</div>' + '</div>';
+          return $row_output;
+        }
+      }, {
+        targets: 2,
+        searchable: false,
+        orderable: false,
+        render: function (data, type, full, meta) {
+          var $price = full['price'];
+          var $output = '<span>' + $price + '</span>';
+          return $output;
+        }
+      }, {
+        targets: 3,
+        searchable: false,
+        orderable: false,
+        render: function (data, type, full, meta) {
+          var $qty = full['qty'];
+          var $output = '<span class="text-body">' + $qty + '</span>';
+          return $output;
+        }
+      }, {
+        targets: 4,
+        searchable: false,
+        orderable: false,
+        render: function (data, type, full, meta) {
+          var $total = parseInt(full['qty']) * full['price'];
+          var $output = $total ? '<h6 class="mb-0">' + $total + '</h6>' : data;
+          return $output;
+        }
+      }
+    ],
+    order: [
+      1, ''
+    ],
+    dom: 't',
+    responsive: {
+      details: {
+        display: $
+          .fn
+          .dataTable
+          .Responsive
+          .display
+          .modal({
+            header: function (row) {
+              var data = row.data();
+              return 'Details of ' + data['full_name'];
+            }
+          }),
+        type: 'column',
+        renderer: function (api, rowIdx, columns) {
+          var data = $
+            .map(columns, function (col, i) {
+              return col.title !== ''
+                ? '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' + '<td>' + col.title + ':' + '</td> ' + '<td>' + col.data + '</td>' + '</tr>'
+                : '';
+            })
+            .join('');
+
+          return data
+            ? $('<table class="table"/><tbody />').append(data)
+            : false;
+        }
+      }
+    }
+  });
+}
+setTimeout(() => {
+  let offCanvasElement = document.querySelector('#add-new-record');
+  $(".add-item").on('click', function () {
+    offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+    offCanvasEl.show();
+  });
+  $('.add-container').on('click', function () {
+    offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+    offCanvasEl.show();
+    let inst = $('#jstree-checkbox').jstree(true);
+    inst.deselect_all();
+  });
+}, 300);
+let checkboxTree = $('#jstree-checkbox');
+if (checkboxTree.length) {
+  checkboxTree.jstree({
+    core: {
+      check_callback: true,
+      data: tree
+    },
+    plugins: [
+      'types', 'state', 'contextmenu'
+    ],
+    contextmenu: {
+      items: function(node) {
+        console.log(node)
+         switch(node.parents.length -1){
+            case 0:
+              return {
+            컨테이너_변경: {
+              label: '컨테이너 변경',
+              action: function (data) {
+                var inst = $.jstree.reference(data.reference),
+                  obj = inst.get_node(data.reference);
+                inst.edit(obj);
+              }
+            },
+            bom_추가: {
+              label: "bom 추가",
+              action: function (data) {
+                let offCanvasElement = document.querySelector('#add-new-record');
+                offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+                offCanvasEl.show();
+              }
+            },
+            컨테이너_삭제: {
+              label: '컨테이너 삭제',
+              action: function (node) {
+                  data = $("#jstree-checkbox").jstree(true).get_node(node.reference);
+                  let offCanvasElement = document.querySelector('#add-new-record');
+                    offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+                    offCanvasEl.show();
+                  let formRecord = document.getElementById('form-add-new-record');
+                  let formButton = document.getElementById('formButton');
+                  $("#plus-item").addClass('d-none');
+                  let deleteButton = document.createElement('button');
+                  deleteButton.textContent = '삭제';
+                  deleteButton.classList.add('btn', 'btn-danger', 'data-submit', 'me-sm-3', 'me-z1');
+                  formButton.appendChild(deleteButton);
+                  formRecord.querySelector(`[name=price]`).value = data.data.price;
+                  $("#item").val(data.data.item_id).trigger('change')
+                 $("#order_cnt").val(data.data.qty).trigger('change')
+                  formRecord.querySelector(`[name=comment]`).value = data.data.product_info;
+                  deleteButton.addEventListener('click', function (e) {
+                    $.ajax({
+                      url: '{% url "deleteBom" %}',
+                      method: 'POST',
+                      data: {
+                        id: data.id
+                      },  
+                      headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                      }
+                    }).done(function (res) {
+                      inst = $('#jstree-checkbox').jstree(true);
+                      inst.delete_node(data);
+                      offCanvasEl.hide();
+                      })
+                    })
+                }
+              }
+            }
+            case 1:
+              return {
+            bom_삭제: {
+              label: 'bom 삭제',
+                            action: function (node) {
+                  data = $("#jstree-checkbox").jstree(true).get_node(node.reference);
+                  let offCanvasElement = document.querySelector('#add-new-record');
+                    offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+                    offCanvasEl.show();
+                  let formRecord = document.getElementById('form-add-new-record');
+                  let formButton = document.getElementById('formButton');
+                  $("#plus-item").addClass('d-none');
+                  let deleteButton = document.createElement('button');
+                  deleteButton.textContent = '삭제';
+                  deleteButton.classList.add('btn', 'btn-danger', 'data-submit', 'me-sm-3', 'me-z1');
+                  formButton.appendChild(deleteButton);
+                  formRecord.querySelector(`[name=price]`).value = data.data.price;
+                  $("#item").val(data.data.item_id).trigger('change')
+                 $("#order_cnt").val(data.data.qty).trigger('change')
+                  formRecord.querySelector(`[name=comment]`).value = data.data.product_info;
+                  deleteButton.addEventListener('click', function (e) {
+                    $.ajax({
+                      url: '{% url "deleteBom" %}',
+                      method: 'POST',
+                      data: {
+                        id: data.id
+                      },  
+                      headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                      }
+                    }).done(function (res) {
+                      inst = $('#jstree-checkbox').jstree(true);
+                      inst.delete_node(data);
+                      offCanvasEl.hide();
+                  })
+                  formButton.removeChild(deleteButton);
+                  $("#plus-item").removeClass('d-none');
+              })
+            }
+          }
+         }
+      }
+    },
+    },
+    types: {
+      default: {
+        icon: 'bx bx-folder'
+      },
+      html: {
+        icon: 'bx bxl-html5 text-danger'
+      },
+      css: {
+        icon: 'bx bxl-css3 text-info'
+      },
+      img: {
+        icon: 'bx bx-image text-success'
+      },
+      js: {
+        icon: 'bx bxl-nodejs text-warning'
+      }
+    }
+  });
+  let formAddNewRecord = document.getElementById('form-add-new-record');
+  fv = FormValidation.formValidation(formAddNewRecord, {
+    fields: {
+      order_cnt: {
+        validators: {
+          notEmpty: {
+            message: '주문수량은 필수입니다.'
+          }
+        }
+      }
+    },
+    plugins: {
+      trigger: new FormValidation
+        .plugins
+        .Trigger(),
+      bootstrap5: new FormValidation
+        .plugins
+        .Bootstrap5({eleValidClass: '', rowSelector: '.col-sm-12'}),
+      submitButton: new FormValidation
+        .plugins
+        .SubmitButton(),
+      autoFocus: new FormValidation
+        .plugins
+        .AutoFocus()
+    },
+    init: instance => {
+      instance.on('plugins.message.placed', function (e) {
+        if (e.element.parentElement.classList.contains('input-group')) {
+          e
+            .element
+            .parentElement
+            .insertAdjacentElement('afterend', e.messageElement);
+        }
+      });
+    }
+  });
+  $("#item").on('change', (e) => {
+    if (!e.target.value) {
+      $('#order_cnt').attr('disabled', 'disabled');
+      $('#price').val('');
+      $('#tax').val('');
+      $('#order_total').val('');
+    } else {
+      $('#order_cnt').removeAttr('disabled');
+      $('#order_cnt').on('change', (e)=>{
+        $('#order_total').val(e.target.value * $('#price').val());
+        let tax = $('#order_total').val() * 0.1;
+        tax = tax.toFixed(2);
+        $('#tax').val(tax);
+      })
+    }
+  })
+}
+$("#plus-item").on('click', function (e) {
+  let offCanvasElement = document.querySelector('#add-new-record');
+  let offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
+  let formAddNewRecord = $('#form-add-new-record');
+  fv.validate().then(function (status) {
+    if (status === 'Valid') {
+      let data = formAddNewRecord.serializeArray();
+      let formData = data.reduce((acc, item) => {
+        acc[item.name] = item.value;
+        return acc;
+      }, {});
+      let formInput = {
+        'item_id': formData.bom_id,
+        'product_name': items[formData.bom_id - 1].name,
+        'qty': formData.order_cnt,
+        'price': formData.price,
+        'total': formData.order_total,
+        'product_info': formData.comment,
+        'image': ''
+      }
+      let row = dt_products.row.add({
+        "id": dt_products.data().length + 1,
+        ...formInput
+      }).draw();
+      inst = $('#jstree-checkbox').jstree(true);
+      selectedTree = inst.get_selected(); 
+      let objNode = {
+        id: tree.length + 1,
+        parent: parseInt(selectedTree[0]) || '#',
+        text: items[formData.bom_id - 1].name,
+        data: formInput
+      }
+    $.ajax({
+      url: '{% url "addBom" order %}',
+      method: 'POST',
+      data: JSON.stringify(objNode),
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      }, 
+      dataType: 'json'
+    }).done(function (data) {
+      let order_id = data.order_id;
+      let bom_id = data.bom_id;
+      objNode.data.id = order_id
+      objNode.id = bom_id
+      inst.create_node(selectedTree, objNode , 'first', function (new_node) {
+        setTimeout(function () { inst.edit(new_node); },0);
+      });
+      tree.push(objNode);
+    })
+    }
+  });
+  offCanvasEl.hide();
+})
+$("#edit-item").on('click', function (e) {
+  dt_products
+    .rows()
+    .every(function (rowIdx, tableLoop, rowLoop) {
+      let qty = dt_products
+        .cell(rowIdx, 3)
+        .data();
+      dt_products
+        .cell(rowIdx, 3)
+        .data('<input type="number" class="form-control" value="' + qty + '">');
+      dt_products
+        .cell(rowIdx, 4)
+        .data('<button class="btn btn-outline-danger delete-item"><i class="bx bx-trash"></i></button>');
+    });
+  $(e.target).addClass('d-none');
+  let edit_button = document.createElement('button');
+  edit_button
+    .classList
+    .add('btn', 'btn-outline-success', 'save-item');
+  edit_button.innerHTML = '<i class="bx bx-save"></i>&nbsp; 변경 저장';
+  edit_button.addEventListener('click', function (e2) {
+    dt_products
+      .rows()
+      .every(function (rowIdx, tableLoop, rowLoop) {
+        let qty = dt_products
+          .cell(rowIdx, 3)
+          .node()
+          .querySelector('input');
+        qty = $(qty).val();
+        dt_products
+          .cell(rowIdx, 3)
+          .data(qty);
+        dt_products
+          .cell(rowIdx, 4)
+          .data(qty * dt_products.cell(rowIdx, 2).data());
+          $.ajax({
+            url: '{% url "updateBom" %}',
+            method: 'POST',
+            data: {
+              id: dt_products
+                .row(rowIdx)
+                .data().id,
+              qty: qty
+            },
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            }
+          }).done(function (data) {
+          })
+      });
+    $(e.target).removeClass('d-none');
+    e2
+      .target
+      .remove();
+    
+  })
+  e
+    .target
+    .parentElement
+    .appendChild(edit_button);
+    let deleteButton = $(document).find('.delete-item');
+    deleteButton.on('click', function (e2) {
+      let id = dt_products.row(e2.target.closest('tr')).data().id;
+      let inst = $('#jstree-checkbox').jstree(true);
+      let selected = tree.find(item => item.data.id == id);
+      let node = inst.get_node(selected);
+      dt_products
+        .row($(this).parents('tr'))
+        .remove()
+        .draw();
+      checkboxTree.jstree(true).delete_node(
+        node
+      );
+      $.ajax({
+        url: '{% url "deleteBom" %}',
+        method: 'POST',
+        data: {
+          id: node.id
+        },
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        }).done(message => {
+      })
+
+    })
+})
+$('#jstree-checkbox').on('select_node.jstree', function (e, data) {
+  let filterdTree = $('#jstree-checkbox').jstree(true).get_json('#', {
+    flat: true, 
+    no_state: true
+  });
+  let selected = data.selected
+  let inst = $('#jstree-checkbox').jstree(true);
+  let node = inst.get_node(selected);
+  let parent_level = node.parents.length - 1;
+  if(parent_level == 0){
+    level2FilterdTree = filterdTree.filter(item => selected.includes(item.parent));
+    level3FilterdTree = filterdTree.filter(item => level2FilterdTree.map(item => item.id).includes(item.parent));
+    let data = [
+      ...level2FilterdTree,
+      ...level3FilterdTree]
+    dt_products.data().clear().rows.add(level2FilterdTree.map((item, index) => {
+      return {
+        ...item.data,
+        product_info: 'level 2'
+      }
+    })).draw();
+    dt_products.rows.add(level3FilterdTree.map((item, index) => {
+      return {
+        ...item.data,
+        product_info: 'level 3'
+      }
+    })).draw();
+  }else{
+    dt_products.clear().rows.add
+  }
+});
+
+$("#submit-order").on('click', function () {
+})
+items = []
+  $.ajax({
+  url: '{% url "items" %}',
+  method: 'GET',
+  headers: {
+    'X-CSRFToken': '{{ csrf_token }}'
+  },
+  }).done(function (res) {
+    items = res.data
+    items.forEach(item => {
+      $('#item').append(`<option value="${item.id}">${item.name}</option>`)
+    })
+  })
+$("#item").on('change', function (e) {
+  let item = e.target.value;
+  let product = items.find(item => item.id == e.target.value);
+  $('#price').val(product.standard_price);
+});
+})
+</script>
 
 {% include 'footer.html' %}
