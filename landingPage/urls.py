@@ -22,6 +22,7 @@ from .views import *
 
 urlpatterns = [
     path('', dashboard, name="dashboard"),
+    path('aa/bb/c', dashboard2, name="dashboard2"),
     path("auth/register/select/", registerSelect, name="registerSelect"),
     path("auth/register/", register, name="register")
 ]
