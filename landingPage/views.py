@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
-from .models import Profile, CustomerMaster, UserMaster
+from .models import CustomerMaster, UserMaster
 from pymongo import MongoClient
 
 # Create your views here.
