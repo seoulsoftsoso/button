@@ -22,9 +22,9 @@ import landingPage.routing
 # application = get_asgi_application()
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    'websocket': AllowedHostsOriginValidator(AuthMiddlewareStack(
+    'websocket': AuthMiddlewareStack(
         URLRouter(
             landingPage.routing.websocket_urlpatterns  # 웹소켓 라우팅
         )
-    ),)
+    ),
 })
