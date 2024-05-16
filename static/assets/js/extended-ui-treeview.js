@@ -64,7 +64,7 @@ $(function () {
               {
                 text: 'avatar.png',
                 type: 'img'
-              }
+              },
             ]
           },
           {
@@ -325,6 +325,22 @@ $(function () {
               {
                 text: 'style.css',
                 type: 'css'
+              },
+              {
+                text: 'custom.css',
+                state: {
+                  opened: true
+                },
+                children: [
+                  {
+                    text: 'custom-one.css',
+                    type: 'css'
+                  },
+                  {
+                    text: 'custom-two.css',
+                    type: 'css'
+                  }
+                ]
               }
             ]
           },
@@ -345,7 +361,7 @@ $(function () {
               {
                 text: 'avatar.png',
                 type: 'img'
-              }
+              },
             ]
           },
           {

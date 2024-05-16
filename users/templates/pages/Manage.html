@@ -227,20 +227,6 @@
       table.appendChild(tr);
     });
   }
-  document.getElementById("userAddForm").addEventListener('submit', async (e) => {
-    e.preventDefault();
-    console.log(data)
-    let res = await fetch("{% url 'user' %}", {
-      method: 'POST',
-      body: data
-    });
-    if(res.ok){
-      alert('성공적으로 추가되었습니다.');
-      drawCustomer();
-    }else{
-      alert('추가에 실패했습니다.');
-    }
-  });
   drawCustomer();
 </script>
 {% include 'footer.html' %}
