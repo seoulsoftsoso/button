@@ -14,7 +14,14 @@ import json
 # Create your views here.
 
 def delivery(request):
-    return render(request, 'pages/Delivery.html')
+    context = {}
+    usersList = UserMaster.objects.annotate(
+        value = F('id'),
+        avatar = F('signature'),
+        email = F('user__email')
+    ).values('value', 'name', 'avatar', 'email')
+    context['usersList'] = list(usersList)
+    return render(request, 'pages/Delivery.html', context)
 
 def item (request):
     return render(request, 'pages/Item.html')
@@ -56,7 +63,7 @@ def items(request):
             type= item['type'],
             specification= item['specification'],
             model= item['model'],
-            maker= item['maker'],
+            brand= item['brand'],
             level= item['level'],
             standard_price = item['standard_price'],
             delete_flag = 'N',
@@ -102,7 +109,7 @@ def orders(request):
             created_by = request.user,
             updated_by = request.user
         )
-        return JsonResponse({'message': 'success'})
+        return delivery(request)
     elif request.method == "GET":
         orders = OrderMaster.objects\
         .annotate(

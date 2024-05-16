@@ -8,7 +8,7 @@ db.sqlite3
 api/migrations
 *.log
 *.pot
-__pycache__/
+*/__pycache__/
 *.pyc
 **/migrations/*
 data/
@@ -16,3 +16,4 @@ log/
 seoulsoft_mes/settings.py
 uwsgi.ini
 /staticfiles/
+my_settings.py

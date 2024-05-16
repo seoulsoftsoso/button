@@ -59,7 +59,7 @@ def dashboard2(request):
 
 
 def registerSelect(request):
-    return render(request, "auth/RegisterSelect.html")
+    return render(request, "auth/registerSelect.html")
 
 def register(request):
     if request.method == "POST":
@@ -73,7 +73,7 @@ def register(request):
         username = email[:email.find("@")]
         if password == confirmPassword:
             user = User.objects.create_user(username=username, password=password, email=email)
-            UserMaster.objects.create(user=user, user_code=licensee_no, user_name=customer_name, join_date=None, address=None, tel=None, fax=None, custom=None, delete_flag='N', created_by=user, updated_by=user)  
+            UserMaster.objects.create(user=user, code=licensee_no, name=customer_name, join_date=None, address=None, tel=None, fax=None, custom=None, delete_flag='N', created_by=user, updated_by=user)  
             login(request, user)
             return redirect("dashboard")
         else:

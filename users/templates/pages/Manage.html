@@ -1,98 +1,246 @@
 {% include "header.html" %}
 {% include 'menu.html' %}
 {% load static %}
-<div class="col-md-12 order-3 order-lg-12 mb-4 ">
-  <div class="card text-center">
-    <div class="card-header py-3"></div>
-    <div class="tab-content pt-0">
-      <div class="tab-pane fade show active">
-        <div class="table-responsive text-start">
-          <table class="table table-borderless text-nowrap">
-            <thead>
-              <tr>
-                <th>아이디(이메일)</th>
-                <th>법인명</th>
-                <th>대표자명</th>
-                <th>위치</th>
-                <th>갯수</th>
-                <th>가입일자</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="btn-outline-light">
-                <td>tst_moda223</td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img src="{% static 'assets/img/icons/brands/chrome.png' %}" alt="Chrome" height="24" class="me-2"/>
-                    <span>Chrome</span>
-                  </div>
-                </td>
-                <td>크롬</td>
-                <td>경기도 오산시 오산동</td>
-                <td>
-                    3
-                </td>
-                <td>
-                  <span class="badge bg-success text-light">New</span>
-                </td>
-                <td>
-                  <div clsas="d-flex justify-content-between align-items-center gap-3">
-                    <i class="fas fa-edit"></i>
-                    <i class="fas fa-trash"></i>
-                  </div>
-                </td>
-              </tr>
-              <tr class="btn-outline-light">
-                <td>yuwell2377</td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img src="{% static 'assets/img/icons/brands/safari.png' %}" alt="Safari" height="24" class="me-2"/>
-                    <span>Safari</span>
-                  </div>
-                </td>
-                <td>사파리</td>
-                <td>경기도 성남시 판교동</td>
-                <td>
-                  2
-              </td>
-              <td>
-                <span class="badge bg-success text-light">한달전</span>
-              </td>
-              <td>
-                <div clsas="d-flex justify-content-between align-items-center gap-3">
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash"></i>
+<div class="col-md-12 order-3 order-lg-12 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="mx-2">
+                가입 순
+                <span>▼</span>
+            </span>
+            <span class="ml-2">
+                최근 접속 순
+                <span>▼</span>
+            </span>
+        </div>
+        <div class="ml-auto d-flex">
+            <input type="text" class="form-control mx-2" placeholder="검색어를 입력하세요" />
+            <button class="btn me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-header py-3"></div>
+        <div class="tab-content pt-0">
+            <div class="tab-pane fade show active">
+                <div class="table-responsive text-start">
+                    <table class="table table-borderless text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>아이디(이메일)</th>
+                                <th>법인명</th>
+                                <th>대표자명</th>
+                                <th>연락처</th>
+                                <th>가입일자</th>
+                                <th>마지막 로그인</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-              </td>
-                </tr>
-                <tr class="btn-outline-light">
-                  <td>yusell3342</td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <img src="{% static 'assets/img/icons/brands/firefox.png' %}" alt="Firefox" height="24" class="me-2"/>
-                      <span>Firefox</span>
-                    </div>
-                  </td>
-                  <td>파이어폭스</td>
-                  <td>서울시 관악구 신림동</td>
-                  <td>
-                    3
-                </td>
-                <td>
-                  <span class="badge bg-dark text-light">1년전</span>
-                </td>
-                <td>
-                  <div clsas="d-flex justify-content-between align-items-center gap-3">
-                    <i class="fas fa-edit"></i>
-                    <i class="fas fa-trash"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  const TODAY = 0;
+  const YESTERDAY = 1;
+  const THIRTY_DAYS_AGO = 2;
+  const ONE_MONTHS_AGO = 30;
+  const FOUR_MONTHS_AGO = 120;
+  const A_LONG_TIME_AGO = 360;
+  async function getUserData(){
+    let data = await fetch("{% url 'user' %}");
+    return data;
+  }
+  const table = document.querySelector("table tbody");
+  async function drawCustomer(){
+    let data = await getUserData()
+    let tr = document.createElement("tr");
+    tr.innerHTML = `<td colspan="7" class="p-0">
+        <div class="collapse" id="collapseExample" style="">
+          <div class="d-flex p-3 border-0 flex-wrap">
+            <div class="col-12">
+              <form class="d-flex justify-content-between" action="" id="userAddForm">
+                <div class="d-flex align-items-center">
+                  <div class="form-control me-2 border-0">
+                    <label for="email">아이디(이메일)</label>
+                    <input type="text" class="form-control" name="email" value="">
                   </div>
-                </td>
-                </tr>
-              </tbody>
-            </table>
+                  <div class="form-control me-2 border-0">
+                    <label>법인명</label>
+                    <input type="text" class="form-control" name="company" value="">
+                  </div>
+                  <div class="form-control me-2 border-0">
+                    <label>대표자명</label>
+                    <input type="text" class="form-control" name="ceo" value="">
+                  </div>
+                  <div class="form-control me-2 border-0">
+                    <label>연락처</label>
+                    <input type="text" class="form-control" name="tel" value="">
+                  </div>
+                </div>
+              </form>
+            
+            <div class="col-12 d-flex align-items-end mt-3 mt-sm-0 justify-content-end align-content-center">
+              <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                <i class="fas fa-eye"> 닫기</i>
+              </button>
+              <button class="btn" type="sumbit" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                <i class="fas fa-add"> 추가</i>
+              </button>
+          </div>
+          <div class="d-flex align-items-center gap-2 justify-content-end align-content-center mt-3">
+            <span class="badge bg-primary">관리자</span>
+            <span class="badge bg-secondary">사용자</span>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  {% include 'footer.html' %}
+      </td>`;
+    table.appendChild(tr);
+    data = await data.json();
+    console.log(data);
+    data.forEach(({ email, name: company, name: ceo, tel: phone, created_at: regDate, updated_at: lastLogin }, idx) => {
+      regDate = regDate.split("T")[0];
+      lastLogin = lastLogin.split("T")[0];
+      let afterRegDate = (
+        (new Date() - new Date(regDate)) /
+        1000 /
+        60 /
+        60 /
+        24
+      ).toFixed(0);
+      lastLogin = (
+        (new Date() - new Date(lastLogin)) /
+        1000 /
+        60 /
+        60 /
+        24
+      ).toFixed(0);
+      afterRegDate = parseInt(afterRegDate);
+      lastLogin = parseInt(lastLogin);
+      let regTable = {
+        [TODAY]: '<span class="badge bg-danger">오늘</span>',
+        [YESTERDAY]: '<span class="badge bg-warning">어제</span>',
+        [THIRTY_DAYS_AGO]: '<span class="badge bg-info">그제</span>',
+        [ONE_MONTHS_AGO]: '<span class="badge bg-success">한달 전</span>',
+        [FOUR_MONTHS_AGO]: '<span class="badge bg-primary">4개월 전</span>',
+        [A_LONG_TIME_AGO]: '<span class="badge bg-secondary">오래 전</span>',
+      };
+      let regBadge =
+        afterRegDate < 1
+          ? regTable[TODAY]
+          : afterRegDate < 2
+            ? regTable[YESTERDAY]
+            : afterRegDate < 3
+              ? regTable[THIRTY_DAYS_AGO]
+              : afterRegDate < 30
+                ? regTable[ONE_MONTHS_AGO]
+                : afterRegDate < 120
+                  ? regTable[FOUR_MONTHS_AGO]
+                  : regTable[A_LONG_TIME_AGO];
+      let lastLoginBadge =
+        lastLogin < 1
+          ? regTable[TODAY]
+          : lastLogin < 2
+            ? regTable[YESTERDAY]
+            : lastLogin < 3
+              ? regTable[THIRTY_DAYS_AGO]
+              : lastLogin < 30
+                ? regTable[ONE_MONTHS_AGO]
+                : lastLogin < 120
+                  ? regTable[FOUR_MONTHS_AGO]
+                  : regTable[A_LONG_TIME_AGO];
+      let tr = document.createElement("tr");
+      tr.classList.add("btn-outline-light");
+      tr.innerHTML = `
+          <td>${email}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <img src="../static/assets/img/icons/brands/${company}.png" alt="Chrome" height="24" class="me-2" />
+              <span>${company}</span>
+            </div>
+          </td>
+          <td>${ceo}</td>
+          <td>${phone || '010-****-****'}</td>
+          <td>
+            ${regBadge}
+          </td>
+          <td>
+            ${lastLoginBadge}
+          </td>
+          <td>
+            <div clsas="d-flex justify-content-between align-items-center gap-3">
+              <button class="btn me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${idx}" aria-expanded="true" aria-controls="collapseExample">
+                <i class="fas fa-eye"></i>
+              </button>
+              <i class="fas fa-trash"></i>
+            </div>
+          </td>
+        `;
+      table.appendChild(tr);
+      tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="7" class="p-0">
+          <div class="collapse" id="collapseExample${idx}" style="">
+            <div class="d-flex p-3 border-0 flex-wrap">
+              <div class="col-12">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="form-control me-2 border-0">
+                      <label for="email">아이디(이메일)</label>
+                      <input type="text" class="form-control" value="${email}">
+                    </div>
+                    <div class="form-control me-2 border-0">
+                      <label>법인명</label>
+                      <input type="text" class="form-control" value="${company}">
+                    </div>
+                    <div class="form-control me-2 border-0">
+                      <label>대표자명</label>
+                      <input type="text" class="form-control" value="${ceo}">
+                    </div>
+                    <div class="form-control me-2 border-0">
+                      <label>연락처</label>
+                      <input type="text" class="form-control" value="${phone}">
+                    </div>
+                  </div>
+              </div>
+              
+              <div class="col-12 d-flex align-items-end mt-3 mt-sm-0 justify-content-end align-content-center">
+                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${idx}" aria-expanded="true" aria-controls="collapseExample">
+                  <i class="fas fa-eye"> 닫기</i>
+                </button>
+                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${idx}" aria-expanded="true" aria-controls="collapseExample">
+                  <i class="fas fa-edit"> 수정</i>
+                </button>
+                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample${idx}" aria-expanded="true" aria-controls="collapseExample">
+                  <i class="fas fa-trash"> 삭제</i>
+                </button>
+            </div>
+            <div class="d-flex align-items-center gap-2 justify-content-end align-content-center mt-3">
+              <span class="badge bg-primary">관리자</span>
+              <span class="badge bg-secondary">사용자</span>
+            </div>
+          </div>
+        </td>`;
+      table.appendChild(tr);
+    });
+  }
+  document.getElementById("userAddForm").addEventListener('submit', async (e) => {
+    e.preventDefault();
+    console.log(data)
+    let res = await fetch("{% url 'user' %}", {
+      method: 'POST',
+      body: data
+    });
+    if(res.ok){
+      alert('성공적으로 추가되었습니다.');
+      drawCustomer();
+    }else{
+      alert('추가에 실패했습니다.');
+    }
+  });
+  drawCustomer();
+</script>
+{% include 'footer.html' %}
