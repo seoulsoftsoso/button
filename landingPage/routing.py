@@ -1,11 +1,10 @@
-# routing.py
+from django.urls import re_path
+from . import consumers
+import logging
 
-from channels.routing import ProtocolTypeRouter, URLRouter
-from django.urls import path
-from landingPage.consumers import DashboardConsumer
+logger = logging.getLogger(__name__)
 
-application = ProtocolTypeRouter({
-    "websocket": URLRouter([
-        path("ws/dashboard/", DashboardConsumer.as_asgi()),
-    ]),
-})
+websocket_urlpatterns = [
+    re_path(r'ws/aa/bb/c/$', consumers.DashboardConsumer.as_asgi()),
+]
+logger.info('WebSocket URL 패턴 설정 완료')

@@ -10,14 +10,21 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 import os
 
 from django.core.asgi import get_asgi_application
-from channels.routing import ProtocolTypeRouter, URLRouter
+import landingPage.routing  # 웹소켓 라우팅 파일
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'button.settings')
+
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
+from channels.security.websocket import AllowedHostsOriginValidator
+import landingPage.routing
 
 # application = get_asgi_application()
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": URLRouter([
-        # you can define all your routers here
-    ])})
-
+    'websocket': AllowedHostsOriginValidator(AuthMiddlewareStack(
+        URLRouter(
+            landingPage.routing.websocket_urlpatterns  # 웹소켓 라우팅
+        )
+    ),)
+})

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from django.contrib.auth.models import User
 from .models import CustomerMaster, UserMaster
@@ -41,10 +43,19 @@ def dashboard2(request):
             if newest_value:
                 senid_sta_value_map[senid] =newest_value['status']
         con_id_senid_map.setdefault(con_id, {}).update(senid_sta_value_map)
+    initial_data = {
+        'unique_gtr_senids': unique_gtr_senids,
+        'unique_sta_senids': unique_sta_senids,
+        'con_id_senid_map': con_id_senid_map
+    }
 
-    return render(request, "pages/dashboard2.html",
-                  {'unique_gtr_senids': unique_gtr_senids, 'unique_sta_senids': unique_sta_senids,
-                   'con_id_senid_map': con_id_senid_map})
+    initial_data_json = json.dumps(initial_data, cls=DjangoJSONEncoder)
+
+    return render(request, "pages/dashboard2.html", {'initial_data_json': initial_data_json})
+
+    # return render(request, "pages/dashboard2.html",
+    #               {'unique_gtr_senids': unique_gtr_senids, 'unique_sta_senids': unique_sta_senids,
+    #                'con_id_senid_map': con_id_senid_map})
 
 
 def registerSelect(request):

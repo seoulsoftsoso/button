@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +51,11 @@ INSTALLED_APPS = [
     'channels'
 ]
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',  # In-memory 레이어를 사용할 경우
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,6 +86,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'button.wsgi.application'
+ASGI_APPLICATION = 'button.asgi.application'
 
 
 # Database
@@ -92,7 +99,7 @@ WSGI_APPLICATION = 'button.wsgi.application'
 #    }
 #}
 DATABASES = my_settings.DATABASES
-
+# DATABASES = {}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

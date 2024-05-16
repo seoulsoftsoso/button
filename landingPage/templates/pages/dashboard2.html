@@ -26,50 +26,120 @@
                     </div>
                 </div>
                 <div class="text-nowrap" style="padding-bottom: 2rem; padding-left: 2.0rem;padding-right: 1.625rem;">
-                    <table id="dashboard-table" class="datatables-ajax table table-bordered"style="--bs-table-border-color:transparent">
+                    <table id="dashboard-table" class="datatables-ajax table table-bordered" style="--bs-table-border-color:transparent">
                         <thead>
                             <tr>
-                                <td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;
-                                background: var(--original-brown, #3D170F);width:180;">재배동 이름</td>
-                                {% for senid in unique_gtr_senids %}
-                                    <td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;
-                                    background: var(--original-brown, #3D170F);">{{ senid }}</td>
-                                {% endfor %}
-                                {% for senid in unique_sta_senids %}
-                                    <td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;
-                                    background: var(--original-brown, #3D170F);">{{ senid }}</td>
-                                {% endfor %}
+                                <td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;background: var(--original-brown, #3D170F);width:180;">재배동 이름</td>
+                                <script>
+                                    let initialData = JSON.parse('{{ initial_data_json|safe }}');
+
+                                    let socket = new WebSocket(`ws://${window.location.host}/ws/aa/bb/c/`);
+                                    socket.addEventListener("message", (error) => {
+                                      console.log("Error has occured:", error);
+                                      updateTable(initialData);
+                                    });
+                                    socket.addEventListener("open", () => {
+                                        console.log("WebSocket is open");
+                                        updateTable(initialData);
+                                    });
+                                    socket.addEventListener("message", (event) => {
+                                        let data = JSON.parse(event.data);
+                                        updateTable(data);
+                                    });
+                                    socket.addEventListener("close", () => {
+                                      console.log("WebSocket is closed");
+                                    });
+                                    $(window).unload(function () {
+                                       socket.close();
+                                    });
+                                    function updateTable(data) {
+                                        let uniqueGtrSenids = data.unique_gtr_senids;
+                                        let uniqueStaSenids = data.unique_sta_senids;
+                                        let conIdSenidMap = data.con_id_senid_map;
+                                        let headerRow = document.querySelector("#dashboard-table thead tr");
+                                        headerRow.innerHTML = `<td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;background: var(--original-brown, #3D170F);width:180;">재배동 이름</td>`;
+                                        uniqueGtrSenids.forEach(senid => {
+                                            headerRow.innerHTML += `<td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;background: var(--original-brown, #3D170F);">${senid}</td>`;
+                                        });
+                                        uniqueStaSenids.forEach(senid => {
+                                            headerRow.innerHTML += `<td style="border: 1px solid var(--30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;background: var(--original-brown, #3D170F);">${senid}</td>`;
+                                        });
+
+                                        let tableBody = document.querySelector("#dashboard-table tbody");
+                                        tableBody.innerHTML = "";
+
+                                        Object.entries(conIdSenidMap).forEach(([conId, senids]) => {
+                                            let row = `<tr><td style="border-bottom: 1px solid var(--30-b, #C9CACA);width:180;text-align: center; align-items: center;background: var(--5-b, #F6F6F6);">${conId}</td>`;
+                                            uniqueGtrSenids.forEach(uniqueSenid => {
+                                                let value = senids[uniqueSenid] || "-";
+                                                row += `<td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;background: var(--5-b, #F6F6F6);">${value}</td>`;
+                                            });
+                                            uniqueStaSenids.forEach(uniqueSenid => {
+                                                let value = senids[uniqueSenid] || "-";
+                                                row += `<td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;background: var(--5-b, #F6F6F6);">${value}</td>`;
+                                            });
+                                            row += "</tr>";
+                                            tableBody.innerHTML += row;
+                                        });
+                                    }
+                                </script>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for con_id, senids in con_id_senid_map.items %}
-                                <tr style="">
-                                    <td style="border-bottom: 1px solid var(--30-b, #C9CACA);width:180;text-align: center;                                    align-items: center;
-                                    background: var(--5-b, #F6F6F6);">{{ con_id }}</td>
-                                    {% for unique_senid in unique_gtr_senids %}
-                                        {% if unique_senid in senids %}
-                                            {% load custom_tags %}
-                                            <td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;
-                                            background: var(--5-b, #F6F6F6);">{{ senids|get_item:unique_senid }}</td>
-                                        {% else %}
-                                            <td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;
-                                            background: var(--5-b, #F6F6F6);">-</td>
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% for unique_senid in unique_sta_senids %}
-                                        {% if unique_senid in senids %}
-                                            {% load custom_tags %}
-                                            <td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;
-                                            background: var(--5-b, #F6F6F6);">{{ senids|get_item:unique_senid }}</td>
-                                        {% else %}
-                                            <td style="border-bottom: 1px solid var(--30-b, #C9CACA);text-align: center;
-                                            background: var(--5-b, #F6F6F6);">-</td>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
+                            <!-- Table body will be dynamically updated -->
                         </tbody>
                     </table>
+<!--                    <table id="dashboard-table" class="datatables-ajax table table-bordered"style="&#45;&#45;bs-table-border-color:transparent">-->
+<!--                        <thead>-->
+<!--                            <tr>-->
+<!--                                <td style="border: 1px solid var(&#45;&#45;30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;-->
+<!--                                background: var(&#45;&#45;original-brown, #3D170F);width:180;">재배동 이름</td>-->
+<!--                                {% for senid in unique_gtr_senids %}-->
+<!--                                    <td style="border: 1px solid var(&#45;&#45;30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;-->
+<!--                                    background: var(&#45;&#45;original-brown, #3D170F);">{{ senid }}</td>-->
+<!--                                {% endfor %}-->
+<!--                                {% for senid in unique_sta_senids %}-->
+<!--                                    <td style="border: 1px solid var(&#45;&#45;30-b, #C9CACA);color: #FFF;text-align: center;leading-trim: both;text-edge: cap;font-family: Inter;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;-->
+<!--                                    background: var(&#45;&#45;original-brown, #3D170F);">{{ senid }}</td>-->
+<!--                                {% endfor %}-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            {% for con_id, senids in con_id_senid_map.items %}-->
+<!--                                <tr style="">-->
+<!--                                    <td style="border-bottom: 1px solid var(&#45;&#45;30-b, #C9CACA);width:180;text-align: center; align-items: center;-->
+<!--                                    background: var(&#45;&#45;5-b, #F6F6F6);">{{ con_id }}</td>-->
+<!--                                    {% for unique_senid in unique_gtr_senids %}-->
+<!--                                        {% if unique_senid in senids %}-->
+<!--                                            {% load custom_tags %}-->
+<!--                                            <td style="border-bottom: 1px solid var(&#45;&#45;30-b, #C9CACA);text-align: center;-->
+<!--                                            background: var(&#45;&#45;5-b, #F6F6F6);">{{ senids|get_item:unique_senid }}</td>-->
+<!--                                        {% else %}-->
+<!--                                            <td style="border-bottom: 1px solid var(&#45;&#45;30-b, #C9CACA);text-align: center;-->
+<!--                                            background: var(&#45;&#45;5-b, #F6F6F6);">-</td>-->
+<!--                                        {% endif %}-->
+<!--                                    {% endfor %}-->
+<!--                                    {% for unique_senid in unique_sta_senids %}-->
+<!--                                        {% if unique_senid in senids %}-->
+<!--                                            {% load custom_tags %}-->
+<!--                                            <td style="border-bottom: 1px solid var(&#45;&#45;30-b, #C9CACA);text-align: center;-->
+<!--                                            background: var(&#45;&#45;5-b, #F6F6F6);">{{ senids|get_item:unique_senid }}</td>-->
+<!--                                        {% else %}-->
+<!--                                            <td style="border-bottom: 1px solid var(&#45;&#45;30-b, #C9CACA);text-align: center;-->
+<!--                                            background: var(&#45;&#45;5-b, #F6F6F6);">-</td>-->
+<!--                                        {% endif %}-->
+<!--                                    {% endfor %}-->
+<!--                                </tr>-->
+<!--                            {% endfor %}-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                    <script>-->
+<!--                        let url = `ws://${window.location.host}/ws/aa/bb/c/`;-->
+<!--                            let chatSocket = new WebSocket(url);-->
+<!--                            chatSocket.addEventListener("message", (event) => {-->
+<!--                              console.log("Message from server:", event.data);-->
+<!--                            });-->
+<!--                    </script>-->
                 </div>
             </div>
         </div>
