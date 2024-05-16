@@ -23,4 +23,5 @@ from .views import *
 urlpatterns = [
     path("manage", manage, name = 'user_manage'),
     path('part', part, name = 'part'),
+    path("users", user, name = 'user')
 ]

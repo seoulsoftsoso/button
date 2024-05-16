@@ -2,95 +2,140 @@
 {% include "header.html" %}
 {% include 'menu.html' %}
 <!-- Content -->
-
 <div class="container-xxl flex-grow-1 container-p-y">
-  <!-- DataTable with Buttons -->
-  <div class="card">
-    <div class="card-datatable table-responsive">
-      <table class="datatables-basic table border-top">
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th>id</th>
-            <th>사용자</th>
-            <th>납품처</th>
-            <th>주문일자</th>
-            <th>수량</th>
-            <th>공급가</th>
-            <th>부가세</th>
-            <th>현황</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
+    <!-- DataTable with Buttons -->
+    <div class="card">
+        <div class="card-datatable table-responsive">
+            <table class="datatables-basic table border-top">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>id</th>
+                        <th>사용자</th>
+                        <th>납품처</th>
+                        <th>주문일자</th>
+                        <th>수량</th>
+                        <th>공급가</th>
+                        <th>부가세</th>
+                        <th>현황</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
-  </div>
-  <!-- Modal to add new record -->
-  <div class="offcanvas offcanvas-end" id="add-new-record">
-    <div class="offcanvas-header border-bottom">
-      <h5 class="offcanvas-title" id="exampleModalLabel">주문 등록</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <!-- Modal to add new record -->
+    <div class="offcanvas offcanvas-end" id="add-new-record">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="exampleModalLabel">주문 등록</h5>
+            <button type="button"
+                    class="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body flex-grow-1">
+            <form class="add-new-record pt-0 row g-2 "
+                  id="form-add-new-record"
+                  action="{% url 'orders' %}"
+                  method="POST"
+                  href="{% url 'orders' %}">
+                {% csrf_token %}
+                <div class="col-sm-12">
+                    <label class="form-label" for="order_date">주문일자</label>
+                    <input type="text"
+                           id="order_date"
+                           name="order_date"
+                           class="form-control"
+                           aria-label="Enter order date"
+                           placeholder="년/월/일" />
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="TagifyUserList">주문자</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text">
+                            <i class="bx bx-user"></i>
+                        </span>
+                        <input type="text"
+                               id="TagifyUserList"
+                               name="client"
+                               class="form-control"
+                               placeholder="Enter user"
+                               aria-label="Enter user" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="cnt">주문수량</label>
+                    <input type="number"
+                           id="cnt"
+                           name="cnt"
+                           class="form-control"
+                           placeholder="Enter order quantity"
+                           aria-label="Enter order quantity" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="price">공급가</label>
+                    <div class="input-group input-group-merge">
+                        <span id="price2" class="input-group-text">
+                            <i class="bx bx-dollar"></i>
+                        </span>
+                        <input type="number"
+                               id="price"
+                               name="price"
+                               class="form-control dt-salary"
+                               placeholder="Enter supply price"
+                               aria-label="Enter supply price"
+                               aria-describedby="price2" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="tax">부가세</label>
+                    <input type="number"
+                           id="tax"
+                           name="tax"
+                           class="form-control"
+                           placeholder="Enter tax"
+                           readonly="readonly" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="total">합계</label>
+                    <div class="input-group input-group-merge">
+                        <span id="total2" class="input-group-text">
+                            <i class="bx bx-dollar"></i>
+                        </span>
+                        <input type="number"
+                               id="total"
+                               name="total"
+                               class="form-control dt-salary"
+                               readonly="readonly" />
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="comment">비고</label>
+                    <input id="comment"
+                           name="comment"
+                           class="form-control"
+                           rows="3"
+                           placeholder="Enter comment"
+                           aria-label="Enter comment" />
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <label class="form-label" for="place">납품처</label>
+                    <input id="place"
+                           name="place"
+                           class="form-control"
+                           rows="3"
+                           placeholder="Enter comment"
+                           aria-label="Enter comment" />
+                </div>
+                <div class="col-sm-12 mt-3">
+                    <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">추가</button>
+                    <button type="reset" class="btn btn-outline-info" data-bs-dismiss="offcanvas">초기화</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="offcanvas-body flex-grow-1">
-      <form class="add-new-record pt-0 row g-2 " id="form-add-new-record" action="{% url 'orders' %}" method="POST" href="{% url 'orders' %}">
-        {% csrf_token %}
-        <div class="col-sm-12">
-          <label class="form-label" for="order_date">주문일자</label>
-          <input type="text" id="order_date" name="order_date" class="form-control" aria-label="Enter order date" placeholder="년/월/일"/>
-        </div>
-        <div class="col-12">
-          <label class="form-label" for="TagifyUserList">주문자</label>
-          <div class="input-group input-group-merge"> 
-            <span class="input-group-text">
-              <i class="bx bx-user"></i>
-            </span>
-            <input type="text" id="TagifyUserList" name="client" class="form-control" placeholder="Enter user" aria-label="Enter user"/>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="cnt">주문수량</label>
-          <input type="number" id="cnt" name="cnt" class="form-control" placeholder="Enter order quantity" aria-label="Enter order quantity"/>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="price">공급가</label>
-          <div class="input-group input-group-merge">
-            <span id="price2" class="input-group-text">
-              <i class="bx bx-dollar"></i>
-            </span>
-            <input type="number" id="price" name="price" class="form-control dt-salary" placeholder="Enter supply price" aria-label="Enter supply price" aria-describedby="price2"/>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="tax">부가세</label>
-          <input type="number" id="tax" name="tax" class="form-control" placeholder="Enter tax" readonly="readonly"/>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="total">합계</label>
-          <div class="input-group input-group-merge">
-            <span id="total2" class="input-group-text">
-              <i class="bx bx-dollar"></i>
-            </span>
-            <input type="number" id="total" name="total" class="form-control dt-salary" readonly="readonly"/>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="comment">비고</label>
-          <input id="comment" name="comment" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <label class="form-label" for="place">납품처</label>
-          <input id="place" name="place" class="form-control" rows="3" placeholder="Enter comment" aria-label="Enter comment"/>
-        </div>
-
-        <div class="col-sm-12 mt-3">
-          <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">추가</button>
-          <button type="reset" class="btn btn-outline-info" data-bs-dismiss="offcanvas">초기화</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <!--/ Complex Headers -->
+    <!--/ Complex Headers -->
 </div>
 <!-- / Content -->
 <div class="content-backdrop fade"></div>
@@ -260,7 +305,7 @@ $(function () {
           buttons: [
             {
               extend: 'print',
-              text: '<i class="bx bx-printer me-1" ></i>Print',
+              text: '<i class="bx bx-printer me-1"></i>Print',
               className: 'dropdown-item',
               exportOptions: {
                 columns: [
@@ -301,7 +346,7 @@ $(function () {
               }
             }, {
               extend: 'csv',
-              text: '<i class="bx bx-file me-1" ></i>Csv',
+              text: '<i class="bx bx-file me-1"></i>Csv',
               className: 'dropdown-item',
               exportOptions: {
                 columns: [
@@ -385,7 +430,7 @@ $(function () {
               }
             }, {
               extend: 'copy',
-              text: '<i class="bx bx-copy me-1" ></i>Copy',
+              text: '<i class="bx bx-copy me-1"></i>Copy',
               className: 'dropdown-item',
               exportOptions: {
                 columns: [
@@ -442,7 +487,7 @@ $(function () {
               .join('');
 
             return data
-              ? $('<table class="table"/><tbody />').append(data)
+              ? $('<table class="table" /><tbody />').append(data)
               : false;
           }
         }
@@ -667,5 +712,4 @@ $("#price").on('input', function () {
   $("#total").val(total);
 });
 </script>
-
 {% include 'footer.html' %}
