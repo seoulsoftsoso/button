@@ -3,12 +3,15 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models.functions import Cast, Round
 import uuid
-
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from .models import itemMaster, basicBom, BOMMaster, OrderMaster, OrderProduct
 from landingPage.models import UserMaster
 from order.models import OrderProduct, OrderMaster, BOMMaster, itemMaster
 from datetime import datetime
 from django.db.models import F, FloatField
+from django.http import HttpResponseRedirect
+
 import json
 
 # Create your views here.
@@ -18,8 +21,9 @@ def delivery(request):
     usersList = UserMaster.objects.annotate(
         value = F('id'),
         avatar = F('signature'),
-        email = F('user__email')
-    ).values('value', 'name', 'avatar', 'email')
+        email = F('user__email'),
+        full_name = F('user__username')
+    ).values('value', 'name', 'avatar', 'email', 'full_name')
     context['usersList'] = list(usersList)
     return render(request, 'pages/Delivery.html', context)
 
@@ -54,7 +58,10 @@ def build(request, order):
     context = { 'order': order, 'bomTree': bomTree }
     return render(request, 'pages/Build.html', context)
 
+@csrf_exempt
 def items(request):
+    if request.user.id is None:
+        return JsonResponse({'message': 'login required', 'data': []})
     if request.method == "POST":
         item = request.POST.dict()
         itemMaster.objects.create(
@@ -90,6 +97,8 @@ def item_delete(request, id):
     return JsonResponse({'message': 'success'})
 
 def orders(request):
+    if request.user.id is None:
+        return JsonResponse({'message': 'login required', 'data': []})
     if request.method == "POST":
         order = request.POST.dict()
         so_no = 'BF' + str(datetime.now().strftime('%y%m%d'))
@@ -109,13 +118,13 @@ def orders(request):
             created_by = request.user,
             updated_by = request.user
         )
-        return delivery(request)
+        return JsonResponse({'message': 'success'})
     elif request.method == "GET":
         orders = OrderMaster.objects\
         .annotate(
             avatar=F('client__signature'), 
             full_name=F('client__user__username'),
-            post=F('client__code')
+            post=F('client__tel'),
             )\
         .filter(delete_flag='N')\
         .values()
