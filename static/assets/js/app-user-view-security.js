@@ -31,7 +31,7 @@
               compare: function () {
                 return formChangePass.querySelector('[name="newPassword"]').value;
               },
-              message: 'The password and its confirm are not the same'
+              message: '비밀번호는 같아야 합니다.'
             },
             stringLength: {
               min: 8,

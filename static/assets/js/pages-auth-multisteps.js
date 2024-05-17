@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 compare: function () {
                   return stepsValidationFormStep1.querySelector('[name="multiStepsPass"]').value;
                 },
-                message: 'The password and its confirm are not the same'
+                message: '비밀번호는 같아야 합니다.'
               }
             }
           }
