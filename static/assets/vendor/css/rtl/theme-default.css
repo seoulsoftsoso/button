@@ -2,6 +2,14 @@
 /*
 * Pages Mixins
 */
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal) .layout-page:before {
+  content: "";
+  width: 100%;
+  height: 4.75rem;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+}
 
 .bg-menu-theme .menu-header {
   position: relative;

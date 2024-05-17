@@ -420,7 +420,7 @@ $(function () {
       customerEmail: {
         validators: {
           notEmpty: {
-            message: 'Please enter your email'
+            message: '이메일 체크해주세요'
           },
           emailAddress: {
             message: 'The value is not a valid email address'
