@@ -4,7 +4,6 @@ __pycache__
 button/__pycache__
 *.pyc
 venv/
-db.sqlite3
 api/migrations
 *.log
 *.pot
@@ -13,7 +12,9 @@ api/migrations
 **/migrations/*
 data/
 log/
-seoulsoft_mes/settings.py
+button/settings.py
 uwsgi.ini
 /staticfiles/
-my_settings.py
+/my_settings.py
+/button/settings.py
+
