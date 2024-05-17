@@ -61,7 +61,7 @@
   --bs-dark-border-subtle: #7c7db6;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --bs-font-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --bs-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-root-font-size: 16px;
@@ -87,7 +87,7 @@
   --bs-link-color: #3D170F;
   --bs-link-color-rgb: 105, 108, 255;
   --bs-link-decoration: none;
-  --bs-link-hover-color: #2F110B;
+  --bs-link-hover-color: #5f61e6;
   --bs-link-hover-color-rgb: 95, 97, 230;
   --bs-code-color: #e83e8c;
   --bs-highlight-color: #a3a4cc;
