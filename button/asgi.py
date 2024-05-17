@@ -16,7 +16,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'button.settings')
 
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from channels.security.websocket import AllowedHostsOriginValidator
 import landingPage.routing
 
 # application = get_asgi_application()

@@ -75,7 +75,7 @@ $ sudo systemctl restart nginx
 
 #optional, 디자인 적용 안될때
 $ sudo vi /etc/nginx/nginx.conf  #이 안에 들어가서 첫번째줄 user이 www-data로 되어있을텐데 본인 user로 수정해주기.
-
+    
 
 ####
 #수정관리는 
