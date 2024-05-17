@@ -614,7 +614,8 @@
                                             class="select2 form-select"
                                             name="bom_id"
                                             data-allow-clear="true"
-                                            aria-label="Select item"></select>
+                                            aria-label="Select item">
+                                          </select>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <label class="form-label" for="order_cnt">주문수량</label>
@@ -848,16 +849,6 @@ if (checkboxTree.length) {
                 var inst = $.jstree.reference(data.reference),
                   obj = inst.get_node(data.reference);
                 inst.edit(obj);
-              }
-            },
-            bom_추가: {
-              label: "bom 추가",
-              action: function (data) {
-                $("#plus-item").removeClass('d-none');
-                $('.delete-item').remove();
-                let offCanvasElement = document.querySelector('#add-new-record');
-                offCanvasEl = new bootstrap.Offcanvas(offCanvasElement);
-                offCanvasEl.show();
               }
             },
             컨테이너_삭제: {
@@ -1163,6 +1154,10 @@ $('#jstree-checkbox').on('select_node.jstree', function (e, data) {
   let inst = $('#jstree-checkbox').jstree(true);
   let node = inst.get_node(selected);
   let parent_level = node.parents.length - 1;
+  console.lg(parent_level)
+  if(parent_level == 2){
+    inst.deselect_all();
+  }
   if(parent_level == 0){
     level2FilterdTree = filterdTree.filter(item => selected.includes(item.parent));
     level3FilterdTree = filterdTree.filter(item => level2FilterdTree.map(item => item.id).includes(item.parent));

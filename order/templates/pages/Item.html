@@ -38,9 +38,9 @@
                     </div>
                     <form class="add-new-record pt-0 row g-2 "
                           id="form-add-new-record"
+                          href="javascript:;"
                           action="{% url 'items' %}"
                           method="POST">
-                        {% csrf_token %}
                         <div class="col-sm-12 col-md-6">
                             <label class="form-label" for="code">품번</label>
                             <input type="text"
@@ -182,7 +182,6 @@
                 eleValidClass: '',
                 rowSelector: '.col-sm-12'
               }),
-              submitButton: new FormValidation.plugins.SubmitButton(),
               defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
               autoFocus: new FormValidation.plugins.AutoFocus()
             },
@@ -193,6 +192,23 @@
                 }
               });
             }
+          });
+          document.querySelector("#form-add-new-record").addEventListener('submit', function (e2) {
+            e2.preventDefault();
+            const form = e2.target;
+            const formData = new FormData(form);
+            const url = form.action;
+            const method = form.method;
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            fetch(url, {
+              method: method,
+              body: formData
+            }).then(response => {
+              if (response.ok) {
+                dt_basic.ajax.reload();
+                $('#item').modal('hide');
+              }
+            });
           });
 
         })();
@@ -492,17 +508,20 @@
           case 'patch':
             formRecord.action = `/order/item/edit/${dt_basic.row(tr).data().id}`;
             $(formRecord).find('button[type="submit"]').text('수정');
+            formRecord.href = 'javascript:;'
             $('h3.title').text('수정');
             break;
           case 'delete':
             formRecord.action = `/order/item/delete/${dt_basic.row(tr).data().id}`;
             $(formRecord).find('input').attr('readonly', true);
             $(formRecord).find('button[type="submit"]').text('삭제');
+            formRecord.href = 'javascript:;'
             $('h3.title').text('삭제');
             break;
           default:
             formRecord.action = '{% url 'items' %}';
             $(formRecord).find('button[type="submit"]').text('추가');
+            formRecord.href = 'javascript:;'
             $('h3.title').text('추가');
             break;
         }
