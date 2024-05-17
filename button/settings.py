@@ -57,6 +57,10 @@ CHANNEL_LAYERS = {
     },
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    '118.44.218.236:7000'
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,6 +140,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howjto/static-files/
 STATIC_URL = "static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static')
 ]

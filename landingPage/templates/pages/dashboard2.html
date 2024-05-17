@@ -72,10 +72,6 @@
                                     let initialData = JSON.parse('{{ initial_data_json|safe }}');
 
                                     let socket = new WebSocket(`ws://${window.location.host}/ws/aa/bb/c/`);
-                                    socket.addEventListener("message", (error) => {
-                                      console.log("Error has occured:", error);
-                                      updateTable(initialData);
-                                    });
                                     socket.addEventListener("open", () => {
                                         console.log("WebSocket is open");
                                         updateTable(initialData);
@@ -84,15 +80,7 @@
                                         let data = JSON.parse(event.data);
                                         updateTable(data);
                                     });
-                                    socket.addEventListener("close", () => {
-                                      console.log("WebSocket is closed");
-                                    });
-                                    window.addEventListener("beforeunload", () => {
-                                        closeWebSocket();
-                                    });
-                                    function closeWebSocket() {
-                                        socket.close();
-                                    }
+
                                     function updateTable(data) {
                                         let uniqueGtrSenids = data.unique_gtr_senids;
                                         let uniqueStaSenids = data.unique_sta_senids;
@@ -1090,4 +1078,5 @@
 <!-- / Footer -->
 <div class="content-backdrop fade"></div>
 <!--/ Content wrapper -->
+<script src="{% static 'assets/app.js' %}"></script>
 {% include 'footer.html' %}
