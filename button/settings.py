@@ -17,7 +17,7 @@ import my_settings
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -58,7 +58,7 @@ CHANNEL_LAYERS = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    '118.44.218.236:7000'
+    'http://118.44.218.236:7000'
 ]
 
 MIDDLEWARE = [
