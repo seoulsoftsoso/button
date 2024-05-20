@@ -1,8 +1,9 @@
 media/
 .idea/
 __pycache__
-button/__pycache__
 *.pyc
+button/__pycache__
+button/__pycache_/*.pyc_
 venv/
 api/migrations
 *.log
