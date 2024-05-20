@@ -80,8 +80,10 @@ $ sudo vi /etc/nginx/nginx.conf  #이 안에 들어가서 첫번째줄 user이 w
 ####
 #수정관리는 
 $ git pull
-$ sudo systemctl restart gunicorn
 $ sudo systemctl restart nginx
+$ sudo systemctl stop gunicorn
+$ gunicorn button.asgi:application -k uvicorn.workers.UvicornWorker -b unix:/run/gunicorn/gunicorn.sock
+
 
 
 #포트포워딩 필요. 현재는 7000번 포트 사용중.
