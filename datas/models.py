@@ -23,3 +23,27 @@ class Plantation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(UserMaster, related_name='created_plantations', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(UserMaster, related_name='updated_plantations', on_delete=models.CASCADE)
+
+
+class GroupCode(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+    enabled = models.BooleanField(default=True)
+    delete_flag = models.CharField(max_length=1, default='N')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by_id = models.ForeignKey(UserMaster, on_delete=models.SET_NULL, null=True, related_name='created_groupcodes')
+    updated_by_id = models.ForeignKey(UserMaster, on_delete=models.SET_NULL, null=True, related_name='updated_groupcodes')
+
+class CodeMaster(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+    explain = models.TextField()
+    enable = models.BooleanField(default=True)
+    etc = models.TextField()
+    group = models.ForeignKey(GroupCode, on_delete=models.SET_NULL, null=True)
+    delete_flag = models.CharField(max_length=1, default='N')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by_id = models.ForeignKey(UserMaster, on_delete=models.SET_NULL, null=True, related_name='created_codemaster')
+    updated_by_id = models.ForeignKey(UserMaster, on_delete=models.SET_NULL, null=True, related_name='updated_codemaster')

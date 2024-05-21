@@ -6,12 +6,22 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.models import User
 from .models import CustomerMaster, UserMaster
 from pymongo import MongoClient
+from order.models import BOMMaster, OrderMaster
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def dashboard(request):
     return render(request, "pages/dashboard.html")
 
 def dashboard2(request):
+    om_op = OrderMaster.objects.filter(client_id=request.user.id)
+    print(request.user.id)
+    # containers = BOMMaster.objects.filter(level=0)
+    # sub_items = BOMMaster.objects.filter(parent__isnull=False,)
+
+    # for bom in bommaster:
+
+
     uri = "mongodb+srv://sj:1234@cluster0.ozlwsy4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     client = MongoClient(uri)
     db = client['djangoConnectTest']
