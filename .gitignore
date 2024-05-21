@@ -3,7 +3,7 @@ media/
 __pycache__
 *.pyc
 button/__pycache__
-button/__pycache_/*.pyc
+button/__pycache__/*.pyc
 venv/
 api/migrations
 *.log
